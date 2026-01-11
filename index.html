@@ -299,7 +299,7 @@
                     </div>
                 </div>
                 <div class="group relative h-96 overflow-hidden cursor-pointer rounded-lg border border-white/5" onclick="showGallery('fineline')">
-                    <img src="/assets/fineline/fine21.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <img src="/assets/fineline/finelinem1.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:via-transparent transition flex items-end p-8">
                         <div>
                             <span class="text-red-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">Subtle Art</span>
@@ -308,7 +308,7 @@
                     </div>
                 </div>
                 <div class="group relative h-96 overflow-hidden cursor-pointer rounded-lg border border-white/5" onclick="showGallery('blackwork')">
-                    <img src="/assets/allstyles/all9.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    <img src="/assets/geometric/geo28.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:via-transparent transition flex items-end p-8">
                         <div>
                             <span class="text-red-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">Bold Contrast</span>
@@ -321,7 +321,7 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:via-transparent transition flex items-end p-8">
                         <div>
                             <span class="text-red-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">Exclusive</span>
-                            <h3 class="text-2xl font-bold uppercase tracking-tighter">CUSTOM</h3>
+                            <h3 class="text-2xl font-bold uppercase tracking-tighter">AVAILABLE DESIGNS</h3>
                         </div>
                     </div>
                 </div>
@@ -362,7 +362,7 @@
                     <button onclick="filterGallery('all')" class="filter-tab active" id="filter-all">All Styles</button>
                     <button onclick="filterGallery('geometric')" class="filter-tab" id="filter-geometric">Geometric & Blackworks</button>
                     <button onclick="filterGallery('fineline')" class="filter-tab" id="filter-fineline">Fine Lines & Minimalist</button>
-                    <button onclick="filterGallery('custom')" class="filter-tab" id="filter-custom">Custom Designs</button>
+                    <button onclick="filterGallery('custom')" class="filter-tab" id="filter-custom">Available Designs</button>
                 </div>
             </div>
 
@@ -500,21 +500,36 @@
     <script>
         // Enhanced Gallery Data with Categories
         const galleryItems = [
-            { id: 1, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/gegeo32.png' },
-            { id: 2, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine8.png' },
-            { id: 3, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo1st.png' },
-            { id: 4, title: 'Dark Flow', cat: 'blackwork', url: 'assets/allstyles/all5.png' },
-            { id: 5, title: 'Geometric Sleeve', cat: 'geometric', url: 'assets/geometric/geo2.png' },
-            { id: 6, title: 'Minimalist Wave', cat: 'fineline', url: 'assets/fineline/fine10.png' },
+            { id: 1, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/geo27.png' },
+            { id: 2, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine9.png' },
+            { id: 3, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo32.png' },
+            { id: 4, title: 'Dark Flow', cat: 'blackwork', url: 'assets/allstyles/all11.png' },
+            { id: 5, title: 'Geometric Sleeve', cat: 'geometric', url: 'assets/geometric/geo35.png' },
+            { id: 6, title: 'Minimalist Wave', cat: 'fineline', url: 'assets/fineline/finelinem1.png' },
             { id: 7, title: 'Custom Concept #1', cat: 'custom', url: 'assets/custom/design4.png' },
-            { id: 8, title: 'Cyber Sigilism', cat: 'blackwork', url: 'assets/allstyles/all1.png' },
-            { id: 9, title: 'Skull Realism', cat: 'blackwork', url: 'assets/allstyles/all11.png' },
-            { id: 10, title: 'Geometric Back', cat: 'geometric', url: 'assets/geometric/geo4.png' },
+            { id: 8, title: 'Cyber Sigilism', cat: 'blackwork', url: 'assets/allstyles/japanesearmselvedargon.png' },
+            { id: 9, title: 'Skull Realism', cat: 'blackwork', url: 'assets/allstyles/lakhedemonicmasksleeve.png' },
+            { id: 10, title: 'Geometric Back', cat: 'geometric', url: 'assets/geometric/geo31.png' },
             { id: 11, title: 'Custom Commission #2', cat: 'custom', url: 'assets/custom/design2.png' },
-            { id: 12, title: 'Fine Line Script', cat: 'fineline', url: 'assets/fineline/fine12.png' },
-            { id: 13, title: 'Solid Black Wrap', cat: 'blackwork', url: 'assets/allstyles/all3.png' },
-            { id: 14, title: 'Geometric Portrait', cat: 'geometric', url: 'assets/geometric/geo3.png' },
+            { id: 12, title: 'Fine Line Script', cat: 'fineline', url: 'assets/fineline/fine10.png' },
+            { id: 13, title: 'Solid Black Wrap', cat: 'blackwork', url: 'assets/allstyles/samuraimasktattoo.png' },
+            { id: 14, title: 'Geometric Portrait', cat: 'geometric', url: 'assets/geometric/geo28.png' },
             { id: 15, title: 'Custom Sleeve', cat: 'custom', url: 'assets/custom/design1.png' },
+            { id: 16, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/geo1stt.png' },
+            { id: 17, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine18.png' },
+            { id: 18, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo24.png' },
+            { id: 19, title: 'Dark Flow', cat: 'blackwork', url: 'assets/allstyles/serenebuddhaarmtattoo.png' },
+            { id: 20, title: 'Geometric Sleeve', cat: 'geometric', url: 'assets/geometric/geo11.png' },
+            { id: 21, title: 'Minimalist Wave', cat: 'fineline', url: 'assets/fineline/fine22.png' },
+            { id: 22, title: 'Dark Flow', cat: 'blackwork', url: 'assets/allstyles/all9.png' },
+            { id: 23, title: 'Custom Sleeve', cat: 'custom', url: 'assets/custom/design3.png' },
+            { id: 24, title: 'Custom Sleeve', cat: 'custom', url: 'assets/custom/design6.png' },
+            { id: 25, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine3.png' },
+            { id: 26, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine7.png' },
+            { id: 27, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine2.png' },
+            { id: 28, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo23.png' },
+            { id: 29, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo26.png' },
+            { id: 30, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo33.png' },
         ];
 
         // UI References
