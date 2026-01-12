@@ -23,17 +23,23 @@
 
         /* Hero Background with Image */
         .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
-                        url('/assets/work2.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+                url('/assets/work2.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Only apply fixed background on non-iOS devices */
+@media (hover: hover) and (pointer: fine) {
+    .hero {
+        background-attachment: fixed;
+    }
+}
 
         /* Masonry / Pinterest Style Grid */
         .masonry-grid {
