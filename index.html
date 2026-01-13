@@ -184,6 +184,21 @@
             background: #dc2626;
             border-radius: 10px;
         }
+.arrow-bounce {
+  display: inline-block;
+  animation: bounce 1s infinite;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(8px);
+  }
+}
     </style>
 <script type="importmap">
 {
@@ -300,7 +315,8 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:via-transparent transition flex items-end p-8">
                         <div>
                             <span class="text-red-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">Premium Style</span>
-                            <h3 class="text-2xl font-bold uppercase tracking-tighter">GEOMETRIC</h3>
+                            <h3 class="text-2xl font-bold uppercase tracking-tighter">GEOMETRIC<span class="arrow-bounce">→</span></h3>
+                            
                         </div>
                     </div>
                 </div>
@@ -309,7 +325,7 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:via-transparent transition flex items-end p-8">
                         <div>
                             <span class="text-red-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">Subtle Art</span>
-                            <h3 class="text-2xl font-bold uppercase tracking-tighter">FINE LINE</h3>
+                            <h3 class="text-2xl font-bold uppercase tracking-tighter">FINE LINE<span class="arrow-bounce">→</span></h3>
                         </div>
                     </div>
                 </div>
@@ -318,7 +334,7 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:via-transparent transition flex items-end p-8">
                         <div>
                             <span class="text-red-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">Bold Contrast</span>
-                            <h3 class="text-2xl font-bold uppercase tracking-tighter">DOTWORK</h3>
+                            <h3 class="text-2xl font-bold uppercase tracking-tighter">DOTWORK<span class="arrow-bounce">→</span></h3>
                         </div>
                     </div>
                 </div>
@@ -327,7 +343,7 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:via-transparent transition flex items-end p-8">
                         <div>
                             <span class="text-red-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">Exclusive</span>
-                            <h3 class="text-2xl font-bold uppercase tracking-tighter">AVAILABLE DESIGNS</h3>
+                            <h3 class="text-2xl font-bold uppercase tracking-tighter">AVAILABLE DESIGNS<span class="arrow-bounce">→</span></h3>
                         </div>
                     </div>
                 </div>
