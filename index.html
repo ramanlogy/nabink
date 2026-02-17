@@ -2,754 +2,1287 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nabinks - Premium Tattoo Artistry</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Nabinks – Premium tattoo artistry in Nepal. Geometric, fine line, blackwork and custom tattoos by Nabin Maharjan.">
+    <title>Nab.Inks – Premium Tattoo Artistry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+        :root {
+            --red: #dc2626;
+            --red-dark: #b91c1c;
+            --bg: #050505;
+            --bg2: #0a0a0a;
+            --border: rgba(255,255,255,0.07);
+            --text-muted: #6b7280;
         }
+
+        *, *::before, *::after {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            background-color: #000;
+            background: var(--bg);
             color: #fff;
+            font-family: 'DM Sans', sans-serif;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Hero Background with Image */
+        /* ─── TYPOGRAPHY ─── */
+        .display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.02em; line-height: 0.95; }
+
+        /* ─── SCROLLBAR ─── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 99px; }
+
+        /* ─── NAV ─── */
+        #navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.5rem 2rem;
+            transition: padding 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            will-change: padding, background;
+        }
+        #navbar.scrolled {
+            padding: 0.9rem 2rem;
+            background: rgba(5,5,5,0.97);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 1px 0 var(--border);
+        }
+        .nav-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            user-select: none;
+            flex-shrink: 0;
+        }
+        .nav-logo span { color: var(--red); }
+        .nav-links {
+            display: flex; align-items: center; gap: 2.5rem;
+        }
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: #fff; }
+        .btn-book {
+            background: var(--red);
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.4rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-book:hover { background: var(--red-dark); }
+        .btn-book:active { transform: scale(0.97); }
+
+        /* Hamburger */
+        #hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+        #hamburger span {
+            display: block; width: 24px; height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        #hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        #hamburger.open span:nth-child(2) { opacity: 0; }
+        #hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* Mobile menu */
+        #mobile-menu {
+            display: none;
+            position: fixed; inset: 0;
+            z-index: 90;
+            background: rgba(5,5,5,0.98);
+            backdrop-filter: blur(12px);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #mobile-menu.open {
+            display: flex;
+            opacity: 1;
+        }
+        #mobile-menu a, #mobile-menu button {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 0.1em;
+            color: #fff;
+            text-decoration: none;
+            background: none; border: none; cursor: pointer;
+            transition: color 0.2s;
+        }
+        #mobile-menu a:hover, #mobile-menu button:hover { color: var(--red); }
+
+        /* ─── HERO ─── */
         .hero {
-    height: 100vh;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
-                url('/assets/work2.png');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
+            height: 100svh;
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background-image: url('assets/work2.png');
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(5,5,5,0.85) 100%);
+        }
+        .hero-content {
+            position: relative; z-index: 1;
+            padding: 0 1.5rem;
+            max-width: 900px;
+        }
+        .hero-title {
+            font-size: clamp(3.5rem, 12vw, 9rem);
+            color: #fff;
+            margin-bottom: 1.2rem;
+        }
+        .hero-title span { color: var(--red); }
+        .hero-sub {
+            font-size: clamp(0.6rem, 1.5vw, 0.75rem);
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 2.5rem;
+        }
+        .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn-primary {
+            background: var(--red);
+            color: #fff; border: none;
+            padding: 1rem 2.5rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            border-radius: 3px; cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            box-shadow: 0 8px 32px rgba(220,38,38,0.3);
+        }
+        .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+        .btn-primary:active { transform: scale(0.98); }
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 1rem 2.5rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            border-radius: 3px; cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.6); }
+        .btn-outline:active { transform: scale(0.98); }
 
-/* Only apply fixed background on non-iOS devices */
-@media (hover: hover) and (pointer: fine) {
-    .hero {
-        background-attachment: fixed;
-    }
-}
-
-        /* Masonry / Pinterest Style Grid */
-        .masonry-grid {
-            column-count: 1;
-            column-gap: 1.5rem;
-            width: 100%;
+        /* ─── SECTIONS ─── */
+        section { padding: 6rem 1.5rem; }
+        .section-inner { max-width: 1200px; margin: 0 auto; }
+        .section-label {
+            font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 0.25em; text-transform: uppercase;
+            color: var(--red); margin-bottom: 0.75rem;
+        }
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        .section-sub {
+            font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--text-muted);
         }
 
-        @media (min-width: 640px) { .masonry-grid { column-count: 2; } }
-        @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
-        @media (min-width: 1280px) { .masonry-grid { column-count: 4; } }
+        /* ─── REVIEWS ─── */
+        #reviews { background: var(--bg2); }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        .review-card {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .review-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(220,38,38,0.25);
+        }
+        .review-img {
+            width: 100%; aspect-ratio: 1/1;
+            object-fit: cover; display: block;
+            background: #111;
+        }
+        .review-body { padding: 1.25rem; }
+        .stars { color: var(--red); font-size: 0.85rem; margin-bottom: 0.5rem; }
+        .review-text {
+            font-size: 0.875rem; color: rgba(255,255,255,0.65);
+            line-height: 1.65; font-style: italic; margin-bottom: 1rem;
+        }
+        .review-name { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
+        .review-piece { font-size: 0.6rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+        .cta-line { margin-top: 3.5rem; text-align: center; }
+        .cta-line p { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
+        .link-cta {
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+            text-transform: uppercase; color: var(--red);
+            background: none; border: none; border-bottom: 1px solid var(--red);
+            padding-bottom: 2px; cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .link-cta:hover { color: #fff; border-color: #fff; }
+
+        /* ─── STYLES GRID ─── */
+        #styles-section { background: var(--bg); }
+        .styles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        .style-card {
+            position: relative; height: 420px;
+            overflow: hidden; border-radius: 10px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+        }
+        .style-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+        .style-card:hover img { transform: scale(1.06); }
+        .style-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 1.5rem;
+        }
+        .style-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 0.4rem; }
+        .style-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.75rem; letter-spacing: 0.05em; color: #fff; display: flex; align-items: center; gap: 0.5rem; }
+        .arrow { display: inline-block; transition: transform 0.3s ease; }
+        .style-card:hover .arrow { transform: translateX(5px); }
+
+        /* ─── ABOUT ─── */
+        #about { background: #0d0d0d; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .about-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+        .about-text { font-size: 1rem; line-height: 1.8; color: rgba(255,255,255,0.6); margin-bottom: 3rem; }
+        .stats { display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; }
+        .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: var(--red); line-height: 1; }
+        .stat-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+
+        /* ─── GALLERY VIEW ─── */
+        #gallery-view { display: none; padding-top: 7rem; padding-bottom: 5rem; min-height: 100vh; }
+        #gallery-view.active { display: block; }
+        #home-view.hidden { display: none; }
+
+        /* Back button */
+        .gallery-back {
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            background: none; border: 1px solid var(--border);
+            color: rgba(255,255,255,0.5);
+            padding: 0.5rem 1rem 0.5rem 0.75rem;
+            border-radius: 99px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
+            margin-bottom: 2.5rem;
+        }
+        .gallery-back:hover {
+            color: #fff; border-color: rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.04);
+        }
+        .gallery-back svg {
+            transition: transform 0.25s ease;
+        }
+        .gallery-back:hover svg { transform: translateX(-3px); }
+
+        /* Tattoo divider ornament */
+        .tattoo-divider {
+            display: flex; align-items: center; gap: 1rem;
+            margin: 2rem 0 2.5rem;
+        }
+        .tattoo-divider-line {
+            flex: 1; height: 1px;
+            background: linear-gradient(to right, transparent, var(--border), transparent);
+        }
+        .tattoo-divider-icon {
+            flex-shrink: 0; opacity: 0.25;
+        }
+
+        .gallery-header {
+            display: flex; flex-wrap: wrap;
+            justify-content: space-between; align-items: flex-end;
+            gap: 1.5rem; margin-bottom: 1rem;
+        }
+        .gallery-header h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
+
+        /* Filter tabs */
+        .filter-tabs { display: flex; flex-wrap: wrap; gap: 0; border-bottom: 1px solid var(--border); }
+        .filter-tab {
+            padding: 0.5rem 1.2rem;
+            font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--text-muted);
+            background: none; border: none; border-bottom: 2px solid transparent;
+            margin-bottom: -1px; cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            white-space: nowrap;
+        }
+        .filter-tab:hover { color: rgba(255,255,255,0.8); }
+        .filter-tab.active { color: #fff; border-bottom-color: var(--red); }
+
+        /* Masonry */
+        .masonry {
+            columns: 1;
+            column-gap: 1rem;
+        }
+        @media (min-width: 480px)  { .masonry { columns: 2; } }
+        @media (min-width: 768px)  { .masonry { columns: 3; } }
+        @media (min-width: 1200px) { .masonry { columns: 4; } }
 
         .masonry-item {
             break-inside: avoid;
-            margin-bottom: 1.5rem;
-            position: relative;
-            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
             overflow: hidden;
-            background: #111;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+            position: relative;
             cursor: pointer;
-        }
-
-        .masonry-item:hover {
-            transform: scale(1.02);
-        }
-
-        .masonry-item img {
-            width: 100%;
+            background: #111;
             display: block;
-            transition: filter 0.3s ease;
+        }
+        .masonry-item img {
+            width: 100%; display: block;
+            transition: transform 0.4s ease;
+        }
+        .masonry-item:hover img { transform: scale(1.03); }
+        .masonry-item-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 1rem;
+        }
+        .masonry-item:hover .masonry-item-overlay { opacity: 1; }
+        .item-cat { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); }
+        .item-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* Fade in animation */
+        .fade-in {
+            opacity: 0; transform: translateY(12px);
+            animation: fadeUp 0.5s ease forwards;
+        }
+        @keyframes fadeUp {
+            to { opacity: 1; transform: none; }
         }
 
-        /* Review Card Styling */
-        .review-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-        .review-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(220, 38, 38, 0.3);
-            transform: translateY(-5px);
-        }
-
-        /* Lightbox & Zoom Styling */
-        #lightbox, #booking-modal {
+        /* ─── LIGHTBOX ─── */
+        #lightbox {
             display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(15px);
-            justify-content: center;
-            align-items: center;
+            position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,0.96);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            align-items: center; justify-content: center;
+            overscroll-behavior: contain;
+        }
+        #lightbox.active { display: flex; }
+        .lb-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            padding: 1rem 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+            z-index: 1;
+        }
+        .lb-title { font-size: 1rem; font-weight: 700; }
+        .lb-sub { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
+        .lb-actions { display: flex; gap: 0.5rem; }
+        .lb-btn {
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; border: none; cursor: pointer;
+            background: rgba(255,255,255,0.1); color: #fff;
+            transition: background 0.2s;
+        }
+        .lb-btn:hover { background: rgba(255,255,255,0.2); }
+        .lb-btn.close { background: var(--red); }
+        .lb-btn.close:hover { background: var(--red-dark); }
+        #lb-img-wrap {
+            max-width: 92vw; max-height: 82vh;
+            display: flex; align-items: center; justify-content: center;
+            cursor: grab; touch-action: pinch-zoom;
+            will-change: transform;
+        }
+        #lb-img-wrap:active { cursor: grabbing; }
+        #lb-img {
+            max-width: 90vw; max-height: 80vh;
+            border-radius: 6px;
+            user-select: none; pointer-events: none;
+            display: block;
+        }
+        .lb-footer {
+            position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            display: flex; align-items: center; gap: 0;
+            background: rgba(0,0,0,0.6); border: 1px solid var(--border);
+            border-radius: 99px; overflow: hidden; backdrop-filter: blur(8px);
+        }
+        .lb-zoom-btn {
+            width: 40px; height: 40px; border: none; background: none;
+            color: #fff; cursor: pointer; font-size: 1.2rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: color 0.2s;
+        }
+        .lb-zoom-btn:hover { color: var(--red); }
+        #lb-zoom-label { font-size: 0.7rem; font-weight: 700; width: 48px; text-align: center; }
+        /* Prev/Next nav */
+        .lb-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.08); border: none; color: #fff;
+            width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+            z-index: 2;
+        }
+        .lb-nav:hover { background: rgba(255,255,255,0.18); }
+        #lb-prev { left: 1rem; }
+        #lb-next { right: 1rem; }
+
+        /* ─── BOOKING MODAL ─── */
+        #booking-modal {
+            display: none;
+            position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            align-items: center; justify-content: center;
+            padding: 1rem;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
+        #booking-modal.active { display: flex; }
+        .booking-box {
+            background: #0d0d0d;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            width: 100%; max-width: 480px;
+            position: relative;
+            max-height: 90vh;
             overflow-y: auto;
         }
-
-        #lightbox.active, #booking-modal.active {
-            display: flex;
-            animation: fadeIn 0.3s ease;
+        .booking-close {
+            position: absolute; top: 1rem; right: 1rem;
+            width: 36px; height: 36px;
+            background: rgba(255,255,255,0.07); border: none; color: rgba(255,255,255,0.6);
+            border-radius: 50%; font-size: 1.1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s, color 0.2s;
         }
-
-        #lightbox-img-container {
-            position: relative;
-            cursor: grab;
-            transition: transform 0.1s ease-out;
+        .booking-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+        .booking-title { font-size: 1.6rem; margin-bottom: 1.75rem; }
+        .method-btn {
+            display: flex; align-items: center; gap: 1rem;
+            width: 100%; padding: 0.9rem 1.25rem;
+            border: none; border-radius: 10px; cursor: pointer;
+            font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700;
+            margin-bottom: 0.75rem; text-decoration: none;
+            transition: transform 0.15s, opacity 0.2s;
         }
-
-        #lightbox-img-container:active {
-            cursor: grabbing;
+        .method-btn:hover { transform: translateY(-2px); opacity: 0.92; }
+        .method-btn:active { transform: scale(0.98); }
+        .method-icon {
+            width: 42px; height: 42px; border-radius: 50%;
+            background: rgba(0,0,0,0.2); display: flex;
+            align-items: center; justify-content: center;
+            flex-shrink: 0;
         }
+        .method-wa { background: #25D366; color: #000; }
+        .method-ig { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); color: #fff; }
+        .method-form { background: #fff; color: #000; }
 
-        #lightbox-img {
-            max-width: 90vw;
-            max-height: 80vh;
-            border-radius: 0.5rem;
-            user-select: none;
+        .form-step { display: none; }
+        .form-step.active { display: block; }
+        .back-btn {
+            font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+            text-transform: uppercase; color: var(--red);
+            background: none; border: none; cursor: pointer;
+            margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem;
+            transition: opacity 0.2s;
         }
-
-        /* Form Styling */
-        .booking-input {
+        .back-btn:hover { opacity: 0.75; }
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        @media (max-width: 400px) { .input-grid { grid-template-columns: 1fr; } }
+        .form-input, .form-select, .form-textarea {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
-            color: #fff;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            width: 100%;
-            transition: all 0.3s ease;
+            color: #fff; border-radius: 8px;
+            padding: 0.75rem 1rem; width: 100%;
+            font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+            transition: border-color 0.2s, background 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none; border-color: var(--red);
+            background: rgba(255,255,255,0.08);
+        }
+        .form-select option { background: #1a1a1a; color: #fff; }
+        .form-textarea { resize: vertical; min-height: 100px; }
+        .submit-btn {
+            width: 100%; background: var(--red); color: #fff; border: none;
+            padding: 0.9rem; border-radius: 8px;
+            font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .submit-btn:hover { background: var(--red-dark); }
+        .submit-btn:active { transform: scale(0.98); }
+        .success-box { text-align: center; padding: 2rem 0; }
+        .success-icon {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: rgba(34,197,94,0.15); color: #22c55e;
+            margin: 0 auto 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .success-box h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+        .success-box p { color: var(--text-muted); font-size: 0.875rem; line-height: 1.6; margin-bottom: 1.5rem; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--bg); border-top: 1px solid var(--border);
+            padding: 4rem 1.5rem;
+        }
+        .footer-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; flex-wrap: wrap;
+            justify-content: space-between; align-items: center;
+            gap: 2.5rem;
+        }
+        .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.05em; }
+        .footer-logo span { color: var(--red); }
+        .footer-tagline { font-size: 0.75rem; color: var(--text-muted); line-height: 1.8; max-width: 260px; margin-top: 0.5rem; }
+        .social-links { display: flex; gap: 1.5rem; align-items: center; }
+        .social-link { color: rgba(255,255,255,0.4); transition: color 0.2s, transform 0.2s; display: block; }
+        .social-link:hover { color: #fff; transform: scale(1.2); }
+        .footer-right { text-align: right; }
+        .footer-book { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); background: none; border: none; cursor: pointer; margin-bottom: 1rem; transition: color 0.2s; }
+        .footer-book:hover { color: #fff; }
+        .footer-copy { font-size: 0.6rem; color: rgba(255,255,255,0.15); letter-spacing: 0.1em; text-transform: uppercase; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            #hamburger { display: flex; }
+            .footer-right { text-align: center; }
+            .footer-inner { justify-content: center; text-align: center; }
+            .footer-tagline { margin: 0 auto; }
+            .social-links { justify-content: center; }
+        }
+        @media (max-width: 480px) {
+            section { padding: 4rem 1rem; }
+            .lb-nav { display: none; }
         }
 
-        .booking-input:focus {
-            outline: none;
-            border-color: #dc2626;
-            background: rgba(255,255,255,0.1);
-        }
-
-        /* Category Tabs */
-        .filter-tab {
-            padding: 0.5rem 1.5rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
-            color: #666;
-        }
-
-        .filter-tab.active {
-            color: #fff;
-            border-color: #dc2626;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .fade-slide-up {
-            animation: fadeSlideUp 0.8s ease forwards;
-        }
-
-        @keyframes fadeSlideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hidden-view {
-            display: none !important;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #000;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #dc2626;
-            border-radius: 10px;
-        }
-.arrow-bounce {
-  display: inline-block;
-  animation: bounce 1s infinite;
-  font-weight: bold;
-  margin-left: 8px;
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(8px);
-  }
-}
+        /* ─── SCROLL REVEAL ─── */
+        [data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        [data-reveal].revealed { opacity: 1; transform: none; }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
-  }
-}
-</script>
 </head>
 <body>
 
-    <!-- Main Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 px-8 flex justify-between items-center">
-        <div class="text-2xl font-black tracking-tighter cursor-pointer" onclick="showHome()">
-            <span class="text-white">NAB</span><span class="text-red-600">.INKS</span>
-        </div>
-        <div class="hidden md:flex gap-8 text-xs font-bold items-center uppercase tracking-widest">
-            <a href="javascript:void(0)" onclick="showHome()" class="hover:text-red-600 transition text-white">Home</a>
-            <a href="javascript:void(0)" onclick="showGallery('all')" class="hover:text-red-600 transition text-gray-300">Showcase</a>
-            <a href="#about" class="hover:text-red-600 transition text-gray-300">About</a>
-            <button onclick="openBooking()" class="bg-red-600 px-6 py-2.5 rounded hover:bg-red-700 transition transform hover:scale-105 active:scale-95 shadow-lg shadow-red-900/20">Book Now</button>
-        </div>
-    </nav>
+<!-- ══════════ NAVBAR ══════════ -->
+<nav id="navbar">
+    <div class="nav-logo display" onclick="showHome()">NAB<span>.INKS</span></div>
+    <div class="nav-links">
+        <a href="javascript:void(0)" onclick="showHome()">Home</a>
+        <a href="javascript:void(0)" onclick="showGallery('all')">Showcase</a>
+        <a href="#about" onclick="showHome(); setTimeout(()=>document.getElementById('about').scrollIntoView({behavior:'smooth'}),100)">About</a>
+        <button class="btn-book" onclick="openBooking()">Book Now</button>
+    </div>
+    <button id="hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
 
-    <!-- Home View -->
-    <main id="home-view">
-        <section class="hero">
-            <div class="max-w-4xl px-4 fade-slide-up">
-                <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tighter uppercase">INK YOUR <br><span class="text-red-600">IDENTITY</span></h1>
-                <p class="text-gray-300 text-lg md:text-xl mb-8 max-w-2xl mx-auto uppercase tracking-widest text-sm font-light">Premium geometric & custom tattoo artistry • Based in the Heart of Nepal</p>
-                <div class="flex gap-4 justify-center">
-                    <button onclick="openBooking()" class="bg-red-600 text-white px-8 py-4 font-bold uppercase tracking-widest hover:bg-red-700 transition transform hover:scale-105 shadow-xl shadow-red-900/40">Book Session</button>
-                    <button onclick="showGallery('all')" class="border border-white/30 px-8 py-4 font-bold uppercase tracking-widest hover:bg-white hover:text-black transition">View Work</button>
-                </div>
-            </div>
-        </section>
+<!-- ══════════ MOBILE MENU ══════════ -->
+<div id="mobile-menu">
+    <a href="javascript:void(0)" onclick="closeMobileMenu();showHome()">Home</a>
+    <a href="javascript:void(0)" onclick="closeMobileMenu();showGallery('all')">Showcase</a>
+    <a href="#about" onclick="closeMobileMenu();showHome();setTimeout(()=>document.getElementById('about').scrollIntoView({behavior:'smooth'}),120)">About</a>
+    <button onclick="closeMobileMenu();openBooking()">Book Now</button>
+</div>
 
-        <!-- Reviews / Testimonials Section (Convince Section) -->
-        <section class="py-24 px-8 bg-[#030303]">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-black tracking-tighter uppercase mb-4">CLIENT <span class="text-red-600">STORIES</span></h2>
-                    <p class="text-gray-500 uppercase tracking-widest text-xs font-bold">Why people trust Nabinks for their permanent art</p>
-                </div>
-
-                <div class="grid md:grid-cols-3 gap-8" id="reviews-container">
-                    <!-- Review Card 1 -->
-                    <div class="review-card p-6 rounded-2xl flex flex-col gap-4 fade-slide-up" style="animation-delay: 0.1s">
-                        <div class="aspect-square overflow-hidden rounded-xl bg-neutral-800">
-                            <img src="/assets/allstyles/all11.png" alt="Client Tattoo" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <div class="flex text-red-600">
-                                ★★★★★
-                            </div>
-                            <p class="text-gray-300 text-sm italic leading-relaxed">"I"m very much Happy with the work. It took just 3 days to complete. It was worth more than money. Thankyou very much nabin. I appreciate it."</p>
-                            <div class="mt-2">
-                                <h4 class="font-bold text-white uppercase text-xs tracking-widest">Niraj Pradhan</h4>
-                                <span class="text-[10px] text-gray-500 uppercase font-bold">Backpiece</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Review Card 2 -->
-                    <div class="review-card p-6 rounded-2xl flex flex-col gap-4 fade-slide-up" style="animation-delay: 0.2s">
-                        <div class="aspect-square overflow-hidden rounded-xl bg-neutral-800">
-                            <img src="/assets/geometric/geo1.png" alt="Client Tattoo" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <div class="flex text-red-600">
-                                ★★★★★
-                            </div>
-                            <p class="text-gray-300 text-sm italic leading-relaxed">"it was far more BETTER than I expected."</p>
-                            <div class="mt-2">
-                                <h4 class="font-bold text-white uppercase text-xs tracking-widest">Anish Dahal</h4>
-                                <span class="text-[10px] text-gray-500 uppercase font-bold">Full Geometric Leg Sleeve </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Review Card 3 -->
-                    <div class="review-card p-6 rounded-2xl flex flex-col gap-4 fade-slide-up" style="animation-delay: 0.3s">
-                        <div class="aspect-square overflow-hidden rounded-xl bg-neutral-800">
-                            <img src="/assets/allstyles/childpotraitwithleaves.png" alt="Client Tattoo" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <div class="flex text-red-600">
-                                ★★★★★
-                            </div>
-                            <p class="text-gray-300 text-sm italic leading-relaxed">"He takes the time to listen and suggests improvements you wouldn't think of. The result was even better than the sketch. Authentic custom art at its finest."</p>
-                            <div class="mt-2">
-                                <h4 class="font-bold text-white uppercase text-xs tracking-widest">Prajwol K.C.</h4>
-                                <span class="text-[10px] text-gray-500 uppercase font-bold">Chest piece</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-16 text-center">
-                    <p class="text-gray-400 text-sm mb-6 uppercase tracking-widest">Join 500+ satisfied clients who found their ink home</p>
-                    <button onclick="openBooking()" class="text-red-600 font-black uppercase text-xs border-b border-red-600 pb-1 hover:text-white hover:border-white transition">Become a part of the story →</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Brief Styles Section -->
-        <section class="py-24 px-8 max-w-7xl mx-auto" id="styles">
-            <h2 class="text-4xl font-bold mb-12 text-center uppercase tracking-tighter">CORE <span class="text-red-600">STYLES</span></h2>
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="group relative h-96 overflow-hidden cursor-pointer rounded-lg border border-white/5" onclick="showGallery('geometric')">
-                    <img src="/assets/geometric/geo1st.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:via-transparent transition flex items-end p-8">
-                        <div>
-                            <span class="text-red-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">Premium Style</span>
-                            <h3 class="text-2xl font-bold uppercase tracking-tighter">GEOMETRIC<span class="arrow-bounce">→</span></h3>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="group relative h-96 overflow-hidden cursor-pointer rounded-lg border border-white/5" onclick="showGallery('fineline')">
-                    <img src="/assets/fineline/finelinem1.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:via-transparent transition flex items-end p-8">
-                        <div>
-                            <span class="text-red-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">Subtle Art</span>
-                            <h3 class="text-2xl font-bold uppercase tracking-tighter">FINE LINE<span class="arrow-bounce">→</span></h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="group relative h-96 overflow-hidden cursor-pointer rounded-lg border border-white/5" onclick="showGallery('blackwork')">
-                    <img src="/assets/geometric/geo28.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:via-transparent transition flex items-end p-8">
-                        <div>
-                            <span class="text-red-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">Bold Contrast</span>
-                            <h3 class="text-2xl font-bold uppercase tracking-tighter">DOTWORK<span class="arrow-bounce">→</span></h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="group relative h-96 overflow-hidden cursor-pointer rounded-lg border border-white/5" onclick="showGallery('custom')">
-                    <img src="/assets/custom/design3.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:via-transparent transition flex items-end p-8">
-                        <div>
-                            <span class="text-red-600 text-[10px] font-black uppercase tracking-[0.2em] mb-2 block">Exclusive</span>
-                            <h3 class="text-2xl font-bold uppercase tracking-tighter">AVAILABLE DESIGNS<span class="arrow-bounce">→</span></h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="py-24 px-8 bg-neutral-900">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-4xl font-bold mb-8 uppercase tracking-tighter">THE <span class="text-red-600">ARTIST</span></h2>
-                <p class="text-gray-400 text-lg leading-relaxed mb-6">
-                    Hello, my name is Nabin Maharjan. I am a professional tattoo artist working across all tattoo styles, with a strong focus on geometric designs. My work is driven by precision, balance, and clean linework, blending symmetry with creative flow.
-                </p>
-                <div class="flex justify-center gap-12 mt-12">
-                    <div>
-                        <div class="text-4xl font-black text-red-600">10+</div>
-                        <div class="text-gray-500 text-[10px] uppercase tracking-widest font-bold">Years Experience</div>
-                    </div>
-                    <div>
-                        <div class="text-4xl font-black text-red-600">500+</div>
-                        <div class="text-gray-500 text-[10px] uppercase tracking-widest font-bold">Custom Designs</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Pinterest Gallery View -->
-    <main id="gallery-view" class="hidden-view pt-32 px-4 md:px-8 pb-24 min-h-screen">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8">
-                <div>
-                    <h2 class="text-5xl font-black tracking-tighter uppercase">Portfolio <span class="text-red-600">Vault</span></h2>
-                    <p class="text-gray-500 mt-2 uppercase tracking-widest text-[10px] font-bold">Refine by style to see specific masterpieces</p>
-                </div>
-                
-                <div class="flex flex-wrap gap-2 border-b border-white/10 w-full md:w-auto">
-                    <button onclick="filterGallery('all')" class="filter-tab active" id="filter-all">All Styles</button>
-                    <button onclick="filterGallery('geometric')" class="filter-tab" id="filter-geometric">Geometric & Blackworks</button>
-                    <button onclick="filterGallery('fineline')" class="filter-tab" id="filter-fineline">Fine Lines & Minimalist</button>
-                    <button onclick="filterGallery('custom')" class="filter-tab" id="filter-custom">Available Designs</button>
-                </div>
-            </div>
-
-            <div class="masonry-grid" id="pinterest-grid">
-                <!-- Gallery items injected via JS -->
+<!-- ══════════ HOME ══════════ -->
+<main id="home-view">
+    <!-- Hero -->
+    <section class="hero" aria-label="Hero">
+        <div class="hero-bg" id="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="display hero-title">INK YOUR<br><span>IDENTITY</span></h1>
+            <p class="hero-sub">Premium Geometric & Custom Tattoo Artistry · Based in the Heart of Nepal</p>
+            <div class="hero-actions">
+                <button class="btn-primary" onclick="openBooking()">Book Session</button>
+                <button class="btn-outline" onclick="showGallery('all')">View Work</button>
             </div>
         </div>
-    </main>
+    </section>
 
-    <!-- Lightbox -->
-    <div id="lightbox">
-        <div class="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-10 bg-gradient-to-b from-black/80 to-transparent">
-            <div class="text-white">
-                <h4 id="lightbox-title" class="text-xl font-bold">Design Title</h4>
-                <p class="text-[10px] text-gray-400 uppercase tracking-widest">Premium Artistry • Nabinks</p>
+    <!-- Reviews -->
+    <section id="reviews">
+        <div class="section-inner">
+            <div style="text-align:center; margin-bottom:0.5rem">
+                <p class="section-label">Client Stories</p>
+                <h2 class="display section-title" data-reveal>Why People Trust <span style="color:var(--red)">Nabinks</span></h2>
+                <p class="section-sub" data-reveal>Permanent art deserves permanent trust</p>
             </div>
-            <div class="flex gap-4">
-                <button onclick="downloadImage()" class="bg-white/10 p-3 rounded-full hover:bg-white/20 transition" title="Download Image">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-                </button>
-                <button onclick="closeLightbox()" class="bg-red-600 p-3 rounded-full hover:bg-red-700 transition" title="Close">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                </button>
+            <div class="reviews-grid">
+                <div class="review-card" data-reveal style="transition-delay:0.1s">
+                    <img class="review-img" src="assets/allstyles/all11.png" alt="Client tattoo by Nabinks" loading="lazy">
+                    <div class="review-body">
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"I'm very much happy with the work. It took just 3 days to complete. It was worth more than money. Thank you very much Nabin."</p>
+                        <div class="review-name">Niraj Pradhan</div>
+                        <div class="review-piece">Backpiece</div>
+                    </div>
+                </div>
+                <div class="review-card" data-reveal style="transition-delay:0.2s">
+                    <img class="review-img" src="assets/geometric/geo1.png" alt="Geometric leg sleeve tattoo" loading="lazy">
+                    <div class="review-body">
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"It was far more BETTER than I expected. The geometric precision and clean lines blew me away."</p>
+                        <div class="review-name">Anish Dahal</div>
+                        <div class="review-piece">Full Geometric Leg Sleeve</div>
+                    </div>
+                </div>
+                <div class="review-card" data-reveal style="transition-delay:0.3s">
+                    <img class="review-img" src="assets/allstyles/childpotraitwithleaves.png" alt="Chest piece tattoo" loading="lazy">
+                    <div class="review-body">
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"He takes the time to listen and suggests improvements you wouldn't think of. The result was even better than the sketch."</p>
+                        <div class="review-name">Prajwol K.C.</div>
+                        <div class="review-piece">Chest Piece</div>
+                    </div>
+                </div>
+            </div>
+            <div class="cta-line">
+                <p>Join 500+ satisfied clients who found their ink home</p>
+                <button class="link-cta" onclick="openBooking()">Become a part of the story →</button>
             </div>
         </div>
-        <div id="lightbox-img-container">
-            <img id="lightbox-img" src="" alt="">
+    </section>
+
+    <!-- Styles -->
+    <section id="styles-section">
+        <div class="section-inner">
+            <p class="section-label" style="text-align:center">Our Craft</p>
+            <h2 class="display section-title" style="text-align:center" data-reveal>Core <span style="color:var(--red)">Styles</span></h2>
+            <div class="styles-grid">
+                <div class="style-card" onclick="showGallery('geometric')" data-reveal style="transition-delay:0.05s">
+                    <img src="assets/geometric/geo1st.png" alt="Geometric tattoo" loading="lazy">
+                    <div class="style-overlay">
+                        <div class="style-label">Premium Style</div>
+                        <div class="style-name display">Geometric <span class="arrow">→</span></div>
+                    </div>
+                </div>
+                <div class="style-card" onclick="showGallery('fineline')" data-reveal style="transition-delay:0.1s">
+                    <img src="assets/fineline/finelinem1.png" alt="Fine line tattoo" loading="lazy">
+                    <div class="style-overlay">
+                        <div class="style-label">Subtle Art</div>
+                        <div class="style-name display">Fine Line <span class="arrow">→</span></div>
+                    </div>
+                </div>
+                <div class="style-card" onclick="showGallery('blackwork')" data-reveal style="transition-delay:0.15s">
+                    <img src="assets/geometric/geo28.png" alt="Blackwork tattoo" loading="lazy">
+                    <div class="style-overlay">
+                        <div class="style-label">Bold Contrast</div>
+                        <div class="style-name display">Dotwork <span class="arrow">→</span></div>
+                    </div>
+                </div>
+                <div class="style-card" onclick="showGallery('custom')" data-reveal style="transition-delay:0.2s">
+                    <img src="assets/custom/design3.png" alt="Custom tattoo design" loading="lazy">
+                    <div class="style-overlay">
+                        <div class="style-label">Exclusive</div>
+                        <div class="style-name display" style="font-size:1.3rem">Available Designs <span class="arrow">→</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-4 bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/10">
-            <button onclick="changeZoom(-0.2)" class="w-10 h-10 flex items-center justify-center hover:text-red-600 transition">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
-            <span id="zoom-level" class="flex items-center text-xs font-bold w-12 justify-center">100%</span>
-            <button onclick="changeZoom(0.2)" class="w-10 h-10 flex items-center justify-center hover:text-red-600 transition">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+        <div class="about-inner">
+            <p class="section-label" data-reveal>The Artist</p>
+            <h2 class="display section-title" data-reveal>Behind the <span style="color:var(--red)">Needle</span></h2>
+            <p class="about-text" data-reveal>
+                Hello, my name is Nabin Maharjan. I am a professional tattoo artist working across all tattoo styles, with a strong focus on geometric designs. My work is driven by precision, balance, and clean linework — blending symmetry with creative flow.
+            </p>
+            <div class="stats">
+                <div data-reveal style="transition-delay:0.1s">
+                    <div class="stat-num display">10+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div data-reveal style="transition-delay:0.2s">
+                    <div class="stat-num display">500+</div>
+                    <div class="stat-label">Custom Designs</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- ══════════ GALLERY VIEW ══════════ -->
+<main id="gallery-view" class="section-inner" style="padding:7rem 1.5rem 5rem">
+
+    <!-- Back to Home -->
+    <button class="gallery-back" onclick="showHome()" aria-label="Back to home">
+        <!-- needle icon -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Back to Home
+    </button>
+
+    <div class="gallery-header">
+        <div>
+            <p style="font-size:0.6rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--red);margin-bottom:0.4rem">Nab.Inks · Studio</p>
+            <h2 class="display" style="font-size:clamp(2rem,5vw,3.5rem)">Portfolio <span style="color:var(--red)">Vault</span></h2>
+            <p style="font-size:0.65rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-top:0.5rem">Filter by style to explore the collection</p>
+        </div>
+        <div class="filter-tabs" role="tablist">
+            <button class="filter-tab active" data-cat="all" onclick="filterGallery('all')" role="tab">All Styles</button>
+            <button class="filter-tab" data-cat="geometric" onclick="filterGallery('geometric')" role="tab">Geometric & Blackwork</button>
+            <button class="filter-tab" data-cat="fineline" onclick="filterGallery('fineline')" role="tab">Fine Lines</button>
+            <button class="filter-tab" data-cat="blackwork" onclick="filterGallery('blackwork')" role="tab">Dark Art</button>
+            <button class="filter-tab" data-cat="custom" onclick="filterGallery('custom')" role="tab">Available Designs</button>
         </div>
     </div>
 
-    <!-- Booking Modal -->
-    <div id="booking-modal">
-        <div id="booking-content" class="w-full max-w-lg mx-auto p-8 relative">
-            <button onclick="closeBooking()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">×</button>
+    <!-- Tattoo ornamental divider -->
+    <div class="tattoo-divider">
+        <div class="tattoo-divider-line"></div>
+        <div class="tattoo-divider-icon">
+            <!-- Tattoo machine / needle SVG icon -->
+            <svg width="28" height="28" viewBox="0 0 64 64" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Machine body -->
+                <rect x="20" y="10" width="24" height="14" rx="3"/>
+                <!-- Grip -->
+                <rect x="26" y="24" width="12" height="16" rx="2"/>
+                <!-- Needle tip -->
+                <line x1="32" y1="40" x2="32" y2="56"/>
+                <polyline points="29,52 32,58 35,52"/>
+                <!-- Coils / detail lines -->
+                <line x1="22" y1="15" x2="42" y2="15"/>
+                <line x1="22" y1="19" x2="42" y2="19"/>
+                <!-- Wire -->
+                <path d="M44 17 Q54 17 54 10" stroke-dasharray="2 2"/>
+            </svg>
+        </div>
+        <div class="tattoo-divider-line"></div>
+    </div>
 
-            <!-- Selection Step -->
-            <div id="booking-step-select" class="fade-slide-up">
-                <h3 class="text-3xl font-black text-center mb-8 uppercase tracking-tighter">Choose Your <span class="text-red-600">Booking Method</span></h3>
-                <div class="flex flex-col gap-4">
-                    <a href="https://wa.me/+9779703931883" target="_blank" class="flex items-center gap-4 bg-[#25D366] text-black p-4 rounded-xl font-bold hover:scale-[1.02] transition">
-                        <div class="w-12 h-12 bg-black/10 rounded-full flex items-center justify-center">
-                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.539 2.016 2.126-.54c1.029.563 2.025.886 3.162.888 3.181 0 5.767-2.587 5.768-5.766 0-3.18-2.586-5.751-5.768-5.751zm3.29 8.12c-.144.405-.838.758-1.226.808-.345.045-.794.065-1.282-.132-.482-.194-1.127-.419-1.935-1.225-1.145-1.144-1.585-2.523-1.585-3.398 0-.875.44-1.315.685-1.56.244-.245.54-.306.735-.306.195 0 .365.001.54.001.175 0 .385-.012.601.444.216.456.72 1.765.78 1.885.061.12.1.26.021.42-.079.16-.18.26-.3.38-.12.12-.25.24-.36.36-.11.11-.23.23-.1.45.13.22.58.96 1.24 1.54.66.58 1.22.76 1.39.84.17.08.27.06.37-.05.1-.11.43-.5.54-.67.11-.17.22-.14.37-.09.15.05.95.45 1.11.53.16.08.27.12.31.2.04.08.04.46-.1.87z"/></svg>
-                        </div>
-                        <div class="flex-1 text-lg">WhatsApp Direct</div>
-                    </a>
-                    <a href="https://instagram.com/" target="_blank" class="flex items-center gap-4 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white p-4 rounded-xl font-bold hover:scale-[1.02] transition">
-                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.063 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.063-2.633-.333-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-4.718 3.561-4.718 4.718-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.2 4.358 3.561 4.718 4.718 4.718 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c4.358-.2 4.718-3.561 4.718-4.718.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.2-4.358-3.561-4.718-4.718-4.718-1.28-.058-1.688-.072-4.947-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        </div>
-                        <div class="flex-1 text-lg">Instagram DM</div>
-                    </a>
-                    <button onclick="goToForm()" class="flex items-center gap-4 bg-white text-black p-4 rounded-xl font-bold hover:scale-[1.02] transition">
-                        <div class="w-12 h-12 bg-black/10 rounded-full flex items-center justify-center">
-                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
-                        </div>
-                        <div class="flex-1 text-left text-lg">Website Request Form</div>
-                    </button>
+    <div class="masonry" id="masonry-grid"></div>
+
+    <!-- Bottom back button for long scroll -->
+    <div style="text-align:center; margin-top:4rem; padding-top:2.5rem; border-top:1px solid var(--border)">
+        <button class="gallery-back" onclick="showHome()" style="margin-bottom:0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Return to Home
+        </button>
+        <p style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-top:1rem">Ready to get inked?</p>
+        <button onclick="openBooking()" style="margin-top:0.75rem;background:var(--red);color:#fff;border:none;padding:0.75rem 2rem;font-family:'DM Sans',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;border-radius:3px;cursor:pointer;transition:background 0.2s" onmouseover="this.style.background='var(--red-dark)'" onmouseout="this.style.background='var(--red)'">Book a Session</button>
+    </div>
+</main>
+
+<!-- ══════════ LIGHTBOX ══════════ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <div class="lb-header">
+        <div>
+            <div class="lb-title" id="lb-title">Design</div>
+            <div class="lb-sub">Premium Artistry · Nabinks</div>
+        </div>
+        <div class="lb-actions">
+            <button class="lb-btn" onclick="downloadLbImage()" title="Download" aria-label="Download image">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </button>
+            <button class="lb-btn close" onclick="closeLightbox()" title="Close" aria-label="Close lightbox">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+    </div>
+    <button class="lb-nav" id="lb-prev" onclick="lbNavigate(-1)" aria-label="Previous image">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div id="lb-img-wrap">
+        <img id="lb-img" src="" alt="Tattoo artwork">
+    </div>
+    <button class="lb-nav" id="lb-next" onclick="lbNavigate(1)" aria-label="Next image">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+    <div class="lb-footer">
+        <button class="lb-zoom-btn" onclick="lbZoom(-0.25)" aria-label="Zoom out">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <span id="lb-zoom-label">100%</span>
+        <button class="lb-zoom-btn" onclick="lbZoom(0.25)" aria-label="Zoom in">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+    </div>
+</div>
+
+<!-- ══════════ BOOKING MODAL ══════════ -->
+<div id="booking-modal" role="dialog" aria-modal="true" aria-label="Book a session">
+    <div class="booking-box">
+        <button class="booking-close" onclick="closeBooking()" aria-label="Close">×</button>
+
+        <!-- Step 1: Choose method -->
+        <div class="form-step active" id="step-choose">
+            <h3 class="display booking-title">Choose Your <span style="color:var(--red)">Method</span></h3>
+            <a href="https://wa.me/+9779703931883" target="_blank" rel="noopener" class="method-btn method-wa">
+                <div class="method-icon">
+                    <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.539 2.016 2.126-.54c1.029.563 2.025.886 3.162.888 3.181 0 5.767-2.587 5.768-5.766 0-3.18-2.586-5.751-5.768-5.751zm3.29 8.12c-.144.405-.838.758-1.226.808-.345.045-.794.065-1.282-.132-.482-.194-1.127-.419-1.935-1.225-1.145-1.144-1.585-2.523-1.585-3.398 0-.875.44-1.315.685-1.56.244-.245.54-.306.735-.306.195 0 .365.001.54.001.175 0 .385-.012.601.444.216.456.72 1.765.78 1.885.061.12.1.26.021.42-.079.16-.18.26-.3.38-.12.12-.25.24-.36.36-.11.11-.23.23-.1.45.13.22.58.96 1.24 1.54.66.58 1.22.76 1.39.84.17.08.27.06.37-.05.1-.11.43-.5.54-.67.11-.17.22-.14.37-.09.15.05.95.45 1.11.53.16.08.27.12.31.2.04.08.04.46-.1.87z"/></svg>
                 </div>
-            </div>
-
-            <!-- Form Step -->
-            <div id="booking-step-form" class="hidden-view fade-slide-up">
-                <button onclick="backToSelect()" class="text-[10px] font-bold uppercase tracking-widest text-red-600 mb-4 flex items-center gap-2">
-                    ← Back to choices
-                </button>
-                <h3 class="text-3xl font-black mb-6 uppercase tracking-tighter">Tattoo <span class="text-red-600">Inquiry</span></h3>
-                
-                <form id="tattoo-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="text" placeholder="Full Name" required class="booking-input">
-                        <input type="email" placeholder="Email Address" required class="booking-input">
-                    </div>
-                    <select id="form-style-select" required class="booking-input">
-                        <option value="" disabled selected>Select Style Preference</option>
-                        <option value="geometric">Geometric / Blackwork</option>
-                        <option value="fineline">Fine Line / Minimalist</option>
-                        <option value="realism">Realism / Portrait</option>
-                        <option value="custom">Custom Commission</option>
-                    </select>
-                    <input type="text" placeholder="Placement (e.g., Forearm, Back)" required class="booking-input">
-                    <textarea placeholder="Describe your tattoo idea (size, details, meaning)..." required rows="4" class="booking-input"></textarea>
-                    
-                    <button type="submit" class="w-full bg-red-600 text-white font-bold py-4 rounded-xl uppercase tracking-widest hover:bg-red-700 transition">Submit Request</button>
-                </form>
-            </div>
-
-            <!-- Success Step -->
-            <div id="booking-step-success" class="hidden-view text-center py-12 fade-slide-up">
-                <div class="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                WhatsApp Direct
+            </a>
+            <a href="https://www.instagram.com/noa.h_025/" target="_blank" rel="noopener" class="method-btn method-ig">
+                <div class="method-icon">
+                    <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.063 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.063-2.633-.333-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                 </div>
-                <h3 class="text-3xl font-black mb-4 uppercase tracking-tighter">Request <span class="text-red-600">Sent!</span></h3>
-                <p class="text-gray-400 mb-8">Thank you for reaching out. Nabin will review your request and get back to you within 48 hours.</p>
-                <button onclick="closeBooking()" class="text-[10px] font-bold uppercase tracking-widest border-b border-white pb-1 hover:text-red-600 hover:border-red-600 transition">Close Window</button>
+                Instagram DM
+            </a>
+            <button class="method-btn method-form" onclick="showFormStep()">
+                <div class="method-icon">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+                </div>
+                <span style="flex:1;text-align:left">Website Request Form</span>
+            </button>
+        </div>
+
+        <!-- Step 2: Form -->
+        <div class="form-step" id="step-form">
+            <button class="back-btn" onclick="showChooseStep()">← Back to choices</button>
+            <h3 class="display booking-title">Tattoo <span style="color:var(--red)">Inquiry</span></h3>
+            <form id="inquiry-form" onsubmit="handleSubmit(event)" novalidate>
+                <div class="input-grid">
+                    <input type="text" placeholder="Full Name" required class="form-input">
+                    <input type="email" placeholder="Email Address" required class="form-input">
+                </div>
+                <select required class="form-select">
+                    <option value="" disabled selected>Select Style</option>
+                    <option>Geometric / Blackwork</option>
+                    <option>Fine Line / Minimalist</option>
+                    <option>Realism / Portrait</option>
+                    <option>Custom Commission</option>
+                </select>
+                <input type="text" placeholder="Placement (e.g. Forearm, Back)" required class="form-input">
+                <textarea placeholder="Describe your tattoo idea — size, details, meaning..." required class="form-textarea"></textarea>
+                <button type="submit" class="submit-btn">Submit Request</button>
+            </form>
+        </div>
+
+        <!-- Step 3: Success -->
+        <div class="form-step" id="step-success">
+            <div class="success-box">
+                <div class="success-icon">
+                    <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <h3 class="display">Request <span style="color:var(--red)">Sent!</span></h3>
+                <p>Thank you for reaching out. Nabin will review your request and get back to you within 48 hours.</p>
+                <button class="link-cta" onclick="closeBooking()">Close Window</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Footer -->
-    <footer class="py-24 px-8 border-t border-white/5 bg-[#050505]">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-            <div class="text-center md:text-left">
-                <div class="text-3xl font-black tracking-tighter mb-4"><span class="text-white">NAB</span><span class="text-red-600">.INKS</span></div>
-                <p class="text-gray-500 text-sm max-w-xs uppercase tracking-widest leading-loose">Where sacred geometry meets the human canvas. High-end tattoo studio based in the heart of Nepal.</p>
-            </div>
-            
-            <div class="flex flex-col items-center gap-6">
-                <h4 class="text-xs font-black uppercase tracking-[0.3em] text-red-600">Connect with us</h4>
-                <div class="flex gap-8">
-                    <a href="https://instagram.com/nab.inks" target="_blank" class="text-gray-400 hover:text-white transition transform hover:scale-125">
-                        <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.063 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.063-2.633-.333-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-4.718 3.561-4.718 4.718-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.2 4.358 3.561 4.718 4.718 4.718 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c4.358-.2 4.718-3.561 4.718-4.718.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.2-4.358-3.561-4.718-4.718-4.718-1.28-.058-1.688-.072-4.947-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                    </a>
-                    <a href="https://wa.me/9703931883" target="_blank" class="text-gray-400 hover:text-white transition transform hover:scale-125">
-                        <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.539 2.016 2.126-.54c1.029.563 2.025.886 3.162.888 3.181 0 5.767-2.587 5.768-5.766 0-3.18-2.586-5.751-5.768-5.751zm3.29 8.12c-.144.405-.838.758-1.226.808-.345.045-.794.065-1.282-.132-.482-.194-1.127-.419-1.935-1.225-1.145-1.144-1.585-2.523-1.585-3.398 0-.875.44-1.315.685-1.56.244-.245.54-.306.735-.306.195 0 .365.001.54.001.175 0 .385-.012.601.444.216.456.72 1.765.78 1.885.061.12.1.26.021.42-.079.16-.18.26-.3.38-.12.12-.25.24-.36.36-.11.11-.23.23-.1.45.13.22.58.96 1.24 1.54.66.58 1.22.76 1.39.84.17.08.27.06.37-.05.1-.11.43-.5.54-.67.11-.17.22-.14.37-.09.15.05.95.45 1.11.53.16.08.27.12.31.2.04.08.04.46-.1.87z"/></svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="text-center md:text-right">
-                <button onclick="openBooking()" class="text-red-600 font-black text-xs uppercase tracking-[0.3em] hover:text-white transition">Book a session →</button>
-                <div class="mt-4 text-[10px] text-gray-700 uppercase tracking-widest">© 2026 NABINKS TATTOO STUDIO. ALL RIGHTS RESERVED.</div>
-            </div>
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+    <div class="footer-inner">
+        <div>
+            <div class="footer-logo display">NAB<span>.INKS</span></div>
+            <p class="footer-tagline">Where sacred geometry meets the human canvas. High-end tattoo studio based in the heart of Nepal.</p>
         </div>
-    </footer>
+        <div class="social-links">
+            <a href="https://www.instagram.com/noa.h_025/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.063 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.063-2.633-.333-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://wa.me/9703931883" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp">
+                <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.07.531 4.022 1.464 5.727L0 24l6.463-1.445A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.028-1.378l-.36-.214-3.732.834.848-3.636-.235-.374A9.818 9.818 0 1 1 12 21.818z"/></svg>
+            </a>
+        </div>
+        <div class="footer-right">
+            <button class="footer-book" onclick="openBooking()">Book a session →</button>
+            <p class="footer-copy">© 2026 Nabinks Tattoo Studio. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
 
-    <script>
-        // Enhanced Gallery Data with Categories
-        const galleryItems = [
-            { id: 1, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/geo27.png' },
-            { id: 2, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine9.png' },
-            { id: 3, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo32.png' },
-            { id: 4, title: 'Dark Flow', cat: 'blackwork', url: 'assets/allstyles/all11.png' },
-            { id: 5, title: 'Geometric Sleeve', cat: 'geometric', url: 'assets/geometric/geo35.png' },
-            { id: 6, title: 'Minimalist Wave', cat: 'fineline', url: 'assets/fineline/finelinem1.png' },
-            { id: 7, title: 'Custom Concept #1', cat: 'custom', url: 'assets/custom/design4.png' },
-            { id: 8, title: 'Cyber Sigilism', cat: 'blackwork', url: 'assets/allstyles/japanesearmselvedargon.png' },
-            { id: 9, title: 'Skull Realism', cat: 'blackwork', url: 'assets/allstyles/lakhedemonicmasksleeve.png' },
-            { id: 10, title: 'Geometric Back', cat: 'geometric', url: 'assets/geometric/geo31.png' },
-            { id: 11, title: 'Custom Commission #2', cat: 'custom', url: 'assets/custom/design2.png' },
-            { id: 12, title: 'Fine Line Script', cat: 'fineline', url: 'assets/fineline/fine10.png' },
-            { id: 13, title: 'Solid Black Wrap', cat: 'blackwork', url: 'assets/allstyles/samuraimasktattoo.png' },
-            { id: 14, title: 'Geometric Portrait', cat: 'geometric', url: 'assets/geometric/geo28.png' },
-            { id: 15, title: 'Custom Sleeve', cat: 'custom', url: 'assets/custom/design1.png' },
-            { id: 16, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/geo1stt.png' },
-            { id: 16, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/geo1.png' },
-            { id: 16, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/geo14.png' },
-            { id: 16, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/geo17.png' },
-            { id: 16, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/geo29.png' },
-            { id: 16, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/geo30.png' },
-            { id: 16, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/geo34.png' },
-            { id: 16, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/geo38.png' },
-            { id: 16, title: 'Geometric Sphere', cat: 'geometric', url: 'assets/geometric/geo36.png' },
-            { id: 12, title: 'Fine Line Script', cat: 'fineline', url: 'assets/fineline/fine4.png' },
-            { id: 12, title: 'Fine Line Script', cat: 'fineline', url: 'assets/fineline/fine5.png' },
-            { id: 12, title: 'Fine Line Script', cat: 'fineline', url: 'assets/fineline/fine6.png' },
-            { id: 12, title: 'Fine Line Script', cat: 'fineline', url: 'assets/fineline/fine8.png' },
-            { id: 12, title: 'Fine Line Script', cat: 'fineline', url: 'assets/fineline/fine21.png' },
-            { id: 12, title: 'Fine Line Script', cat: 'fineline', url: 'assets/fineline/fine20.png' },
-            { id: 12, title: 'Fine Line Script', cat: 'fineline', url: 'assets/fineline/fine12.png' },
+<script>
+// ══════════════════════════════════════════
+// GALLERY DATA — deduplicated, categorized
+// ══════════════════════════════════════════
+const GALLERY = [
+    { title:'Geometric Sphere',      cat:'geometric', url:'assets/geometric/geo27.png' },
+    { title:'Sacred Mandala',        cat:'geometric', url:'assets/geometric/geo32.png' },
+    { title:'Geometric Sleeve',      cat:'geometric', url:'assets/geometric/geo35.png' },
+    { title:'Geometric Back',        cat:'geometric', url:'assets/geometric/geo31.png' },
+    { title:'Geometric Portrait',    cat:'geometric', url:'assets/geometric/geo28.png' },
+    { title:'Geometric Classic',     cat:'geometric', url:'assets/geometric/geo1stt.png' },
+    { title:'Geometric Leg',         cat:'geometric', url:'assets/geometric/geo1.png' },
+    { title:'Geometric Detail',      cat:'geometric', url:'assets/geometric/geo14.png' },
+    { title:'Geometric Flow',        cat:'geometric', url:'assets/geometric/geo17.png' },
+    { title:'Geometric Wrap',        cat:'geometric', url:'assets/geometric/geo29.png' },
+    { title:'Geometric Motif',       cat:'geometric', url:'assets/geometric/geo30.png' },
+    { title:'Geometric Lattice',     cat:'geometric', url:'assets/geometric/geo34.png' },
+    { title:'Geometric Angular',     cat:'geometric', url:'assets/geometric/geo38.png' },
+    { title:'Geometric Spiral',      cat:'geometric', url:'assets/geometric/geo36.png' },
+    { title:'Mandala Classic',       cat:'geometric', url:'assets/geometric/geo24.png' },
+    { title:'Mandala Detailed',      cat:'geometric', url:'assets/geometric/geo23.png' },
+    { title:'Mandala Large',         cat:'geometric', url:'assets/geometric/geo26.png' },
+    { title:'Mandala Sleeve',        cat:'geometric', url:'assets/geometric/geo33.png' },
+    { title:'Geometric Piece',       cat:'geometric', url:'assets/geometric/geo11.png' },
 
-            { id: 17, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine18.png' },
-            { id: 18, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo24.png' },
-            { id: 19, title: 'Dark Flow', cat: 'blackwork', url: 'assets/allstyles/serenebuddhaarmtattoo.png' },
-            { id: 20, title: 'Geometric Sleeve', cat: 'geometric', url: 'assets/geometric/geo11.png' },
-            { id: 21, title: 'Minimalist Wave', cat: 'fineline', url: 'assets/fineline/fine22.png' },
-            { id: 22, title: 'Dark Flow', cat: 'blackwork', url: 'assets/allstyles/all9.png' },
-            { id: 23, title: 'Custom Sleeve', cat: 'custom', url: 'assets/custom/design3.png' },
-            { id: 24, title: 'Custom Sleeve', cat: 'custom', url: 'assets/custom/design6.png' },
-            { id: 25, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine3.png' },
-            { id: 26, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine7.png' },
-            { id: 27, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine2.png' },
-            { id: 28, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo23.png' },
-            { id: 29, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo26.png' },
-            { id: 30, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo33.png' },
-            { id: 31, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine3.png' },
-            
-            { id: 33, title: 'Fine Line Lotus', cat: 'fineline', url: 'assets/fineline/fine2.png' },
-            { id: 34, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo23.png' },
-            { id: 35, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo26.png' },
-            { id: 36, title: 'Sacred Mandala', cat: 'geometric', url: 'assets/geometric/geo33.png' },
-        ];
+    { title:'Fine Line Lotus',       cat:'fineline',  url:'assets/fineline/fine9.png' },
+    { title:'Minimalist Wave',       cat:'fineline',  url:'assets/fineline/finelinem1.png' },
+    { title:'Fine Line Script',      cat:'fineline',  url:'assets/fineline/fine10.png' },
+    { title:'Fine Line Detail',      cat:'fineline',  url:'assets/fineline/fine4.png' },
+    { title:'Fine Line Botanical',   cat:'fineline',  url:'assets/fineline/fine5.png' },
+    { title:'Fine Line Portrait',    cat:'fineline',  url:'assets/fineline/fine6.png' },
+    { title:'Fine Line Minimal',     cat:'fineline',  url:'assets/fineline/fine8.png' },
+    { title:'Fine Line Nature',      cat:'fineline',  url:'assets/fineline/fine21.png' },
+    { title:'Fine Line Abstract',    cat:'fineline',  url:'assets/fineline/fine20.png' },
+    { title:'Fine Line Delicate',    cat:'fineline',  url:'assets/fineline/fine12.png' },
+    { title:'Fine Line Floral',      cat:'fineline',  url:'assets/fineline/fine18.png' },
+    { title:'Fine Line Wave',        cat:'fineline',  url:'assets/fineline/fine22.png' },
+    { title:'Fine Line Classic',     cat:'fineline',  url:'assets/fineline/fine3.png' },
+    { title:'Fine Line Piece',       cat:'fineline',  url:'assets/fineline/fine7.png' },
+    { title:'Fine Line Study',       cat:'fineline',  url:'assets/fineline/fine2.png' },
 
-        // UI References
-        const homeView = document.getElementById('home-view');
-        const galleryView = document.getElementById('gallery-view');
-        const pinterestGrid = document.getElementById('pinterest-grid');
-        const navbar = document.getElementById('navbar');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxImgContainer = document.getElementById('lightbox-img-container');
-        const lightboxTitle = document.getElementById('lightbox-title');
-        const zoomText = document.getElementById('zoom-level');
-        const bookingModal = document.getElementById('booking-modal');
-        const bookingStepSelect = document.getElementById('booking-step-select');
-        const bookingStepForm = document.getElementById('booking-step-form');
-        const bookingStepSuccess = document.getElementById('booking-step-success');
+    { title:'Dark Flow',             cat:'blackwork', url:'assets/allstyles/all11.png' },
+    { title:'Japanese Sleeve',       cat:'blackwork', url:'assets/allstyles/japanesearmselvedargon.png' },
+    { title:'Demonic Mask',          cat:'blackwork', url:'assets/allstyles/lakhedemonicmasksleeve.png' },
+    { title:'Samurai Mask',          cat:'blackwork', url:'assets/allstyles/samuraimasktattoo.png' },
+    { title:'Serene Buddha',         cat:'blackwork', url:'assets/allstyles/serenebuddhaarmtattoo.png' },
+    { title:'All Styles Mix',        cat:'blackwork', url:'assets/allstyles/all9.png' },
+    { title:'Child Portrait',        cat:'blackwork', url:'assets/allstyles/childpotraitwithleaves.png' },
 
-        let currentScale = 1;
-        let currentImgUrl = '';
-        let currentCategory = 'all';
+    { title:'Custom Commission #1',  cat:'custom',    url:'assets/custom/design4.png' },
+    { title:'Custom Commission #2',  cat:'custom',    url:'assets/custom/design2.png' },
+    { title:'Custom Sleeve',         cat:'custom',    url:'assets/custom/design1.png' },
+    { title:'Custom Collection',     cat:'custom',    url:'assets/custom/design3.png' },
+    { title:'Custom Design',         cat:'custom',    url:'assets/custom/design6.png' },
+];
 
-        // View Toggling
-        function showGallery(category = 'all') {
-            homeView.classList.add('hidden-view');
-            galleryView.classList.remove('hidden-view');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            filterGallery(category);
-        }
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let currentCat = 'all';
+let filteredItems = [];
+let lbIndex = 0;
+let lbScale = 1;
+let lbPos = { x: 0, y: 0 };
+let lbDrag = { active: false, startX: 0, startY: 0, originX: 0, originY: 0 };
 
-        function showHome() {
-            galleryView.classList.add('hidden-view');
-            homeView.classList.remove('hidden-view');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+// ══════════════════════════════════════════
+// VIEW MANAGEMENT
+// ══════════════════════════════════════════
+function showHome() {
+    document.getElementById('home-view').classList.remove('hidden');
+    document.getElementById('gallery-view').style.display = 'none';
+    document.body.style.overflow = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-        // Gallery Filtering
-        function filterGallery(category) {
-            currentCategory = category;
-            
-            // Update Tab UI
-            document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
-            document.getElementById(`filter-${category}`).classList.add('active');
+function showGallery(cat) {
+    document.getElementById('home-view').classList.add('hidden');
+    const gv = document.getElementById('gallery-view');
+    gv.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    filterGallery(cat);
+}
 
-            renderPinterestGrid(category);
-        }
+// ══════════════════════════════════════════
+// GALLERY RENDER
+// ══════════════════════════════════════════
+function filterGallery(cat) {
+    currentCat = cat;
+    document.querySelectorAll('.filter-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.cat === cat);
+    });
+    filteredItems = cat === 'all' ? [...GALLERY] : GALLERY.filter(i => i.cat === cat);
+    renderGrid();
+}
 
-        function renderPinterestGrid(filter) {
-            pinterestGrid.innerHTML = '';
-            const filtered = filter === 'all' ? galleryItems : galleryItems.filter(i => i.cat === filter);
-            
-            filtered.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'masonry-item fade-slide-up';
-                div.innerHTML = `
-                    <img src="${item.url}" alt="${item.title}" loading="lazy">
-                    <div class="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition duration-300 flex flex-col justify-end p-6">
-                        <span class="text-[8px] uppercase tracking-[0.3em] font-black text-red-600 mb-1">${item.cat} Artistry</span>
-                        <h4 class="text-sm font-bold uppercase tracking-tighter">${item.title}</h4>
-                    </div>
-                `;
-                div.onclick = () => openLightbox(item.url, item.title);
-                pinterestGrid.appendChild(div);
-            });
-        }
+function renderGrid() {
+    const grid = document.getElementById('masonry-grid');
+    grid.innerHTML = '';
 
-        // Booking Modal Logic
-        function openBooking() {
-            bookingModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            backToSelect();
-        }
+    filteredItems.forEach((item, idx) => {
+        const el = document.createElement('div');
+        el.className = 'masonry-item';
+        el.style.animationDelay = (idx % 12 * 0.04) + 's';
+        el.innerHTML = `
+            <img src="${item.url}" alt="${item.title}" loading="lazy" decoding="async" style="opacity:0;transition:opacity 0.4s ease">
+            <div class="masonry-item-overlay">
+                <div class="item-cat">${item.cat} Artistry</div>
+                <div class="item-title">${item.title}</div>
+            </div>
+        `;
+        const img = el.querySelector('img');
+        img.onload = () => { img.style.opacity = '1'; };
+        img.onerror = () => { el.style.display = 'none'; };
+        el.addEventListener('click', () => openLightbox(idx));
+        grid.appendChild(el);
+    });
+}
 
-        function closeBooking() {
-            bookingModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+// ══════════════════════════════════════════
+// LIGHTBOX
+// ══════════════════════════════════════════
+function openLightbox(idx) {
+    lbIndex = idx;
+    lbScale = 1; lbPos = { x: 0, y: 0 };
+    const lb = document.getElementById('lightbox');
+    lb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    loadLbImage();
+}
 
-        function goToForm() {
-            bookingStepSelect.classList.add('hidden-view');
-            bookingStepForm.classList.remove('hidden-view');
-        }
+function loadLbImage() {
+    const item = filteredItems[lbIndex];
+    if (!item) return;
+    const img = document.getElementById('lb-img');
+    const wrap = document.getElementById('lb-img-wrap');
+    img.style.opacity = '0';
+    img.src = item.url;
+    img.alt = item.title;
+    document.getElementById('lb-title').textContent = item.title;
+    img.onload = () => {
+        img.style.opacity = '1';
+        img.style.transition = 'opacity 0.25s ease';
+    };
+    lbScale = 1; lbPos = { x:0, y:0 };
+    updateLbTransform();
+    // Show/hide nav arrows
+    document.getElementById('lb-prev').style.display = lbIndex > 0 ? '' : 'none';
+    document.getElementById('lb-next').style.display = lbIndex < filteredItems.length - 1 ? '' : 'none';
+}
 
-        function backToSelect() {
-            bookingStepForm.classList.add('hidden-view');
-            bookingStepSuccess.classList.add('hidden-view');
-            bookingStepSelect.classList.remove('hidden-view');
-        }
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+}
 
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            bookingStepForm.classList.add('hidden-view');
-            bookingStepSuccess.classList.remove('hidden-view');
-        }
+function lbNavigate(dir) {
+    const next = lbIndex + dir;
+    if (next >= 0 && next < filteredItems.length) {
+        lbIndex = next;
+        loadLbImage();
+    }
+}
 
-        // Navbar Scroll
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('bg-black/95', 'backdrop-blur-md', 'py-4', 'shadow-2xl');
-                navbar.classList.remove('py-6');
-            } else {
-                navbar.classList.remove('bg-black/95', 'backdrop-blur-md', 'py-4', 'shadow-2xl');
-                navbar.classList.add('py-6');
-            }
+function lbZoom(delta) {
+    lbScale = Math.max(0.5, Math.min(4, lbScale + delta));
+    if (lbScale <= 1) { lbPos = { x: 0, y: 0 }; }
+    updateLbTransform();
+}
+
+function updateLbTransform() {
+    const wrap = document.getElementById('lb-img-wrap');
+    wrap.style.transform = `scale(${lbScale}) translate(${lbPos.x}px, ${lbPos.y}px)`;
+    document.getElementById('lb-zoom-label').textContent = Math.round(lbScale * 100) + '%';
+}
+
+// Drag support
+const lbWrap = document.getElementById('lb-img-wrap');
+lbWrap.addEventListener('mousedown', (e) => {
+    if (lbScale <= 1) return;
+    lbDrag.active = true;
+    lbDrag.startX = e.clientX; lbDrag.startY = e.clientY;
+    lbDrag.originX = lbPos.x; lbDrag.originY = lbPos.y;
+    e.preventDefault();
+});
+document.addEventListener('mousemove', (e) => {
+    if (!lbDrag.active) return;
+    lbPos.x = lbDrag.originX + (e.clientX - lbDrag.startX) / lbScale;
+    lbPos.y = lbDrag.originY + (e.clientY - lbDrag.startY) / lbScale;
+    updateLbTransform();
+});
+document.addEventListener('mouseup', () => { lbDrag.active = false; });
+
+// Touch swipe for lightbox
+let lbTouchStartX = 0;
+document.getElementById('lightbox').addEventListener('touchstart', (e) => {
+    lbTouchStartX = e.touches[0].clientX;
+}, { passive: true });
+document.getElementById('lightbox').addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - lbTouchStartX;
+    if (Math.abs(dx) > 50) lbNavigate(dx < 0 ? 1 : -1);
+}, { passive: true });
+
+async function downloadLbImage() {
+    try {
+        const url = filteredItems[lbIndex]?.url;
+        if (!url) return;
+        const r = await fetch(url);
+        const blob = await r.blob();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `nabinks-${Date.now()}.jpg`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+    } catch { alert('Right-click the image to save.'); }
+}
+
+// ══════════════════════════════════════════
+// BOOKING MODAL
+// ══════════════════════════════════════════
+function openBooking() {
+    document.getElementById('booking-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    showChooseStep();
+}
+
+function closeBooking() {
+    document.getElementById('booking-modal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function showChooseStep() {
+    setStep('step-choose');
+}
+
+function showFormStep() {
+    setStep('step-form');
+    document.getElementById('inquiry-form').reset();
+}
+
+function setStep(id) {
+    ['step-choose','step-form','step-success'].forEach(s => {
+        document.getElementById(s).classList.toggle('active', s === id);
+    });
+}
+
+function handleSubmit(e) {
+    e.preventDefault();
+    setStep('step-success');
+}
+
+// ══════════════════════════════════════════
+// MOBILE MENU
+// ══════════════════════════════════════════
+function toggleMobileMenu() {
+    const mm = document.getElementById('mobile-menu');
+    const hb = document.getElementById('hamburger');
+    const isOpen = mm.classList.contains('open');
+    if (isOpen) { closeMobileMenu(); } else {
+        mm.classList.add('open');
+        hb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+function closeMobileMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+// ══════════════════════════════════════════
+// NAVBAR SCROLL (passive, throttled)
+// ══════════════════════════════════════════
+let lastScroll = 0, rafPending = false;
+window.addEventListener('scroll', () => {
+    lastScroll = window.scrollY;
+    if (!rafPending) {
+        rafPending = true;
+        requestAnimationFrame(() => {
+            document.getElementById('navbar').classList.toggle('scrolled', lastScroll > 40);
+            rafPending = false;
         });
+    }
+}, { passive: true });
 
-        // Lightbox Zoom & Drag
-        function openLightbox(url, title) {
-            currentImgUrl = url;
-            lightboxImg.src = url;
-            lightboxTitle.innerText = title;
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            resetZoom();
+// ══════════════════════════════════════════
+// SCROLL REVEAL (IntersectionObserver)
+// ══════════════════════════════════════════
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.classList.add('revealed');
+            revealObserver.unobserve(e.target);
         }
+    });
+}, { threshold: 0.12 });
+document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
 
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            if (homeView.classList.contains('hidden-view')) {
-                 document.body.style.overflow = 'hidden'; 
-            } else {
-                 document.body.style.overflow = 'auto';
-            }
-        }
+// ══════════════════════════════════════════
+// KEYBOARD & CLICK OUTSIDE
+// ══════════════════════════════════════════
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeLightbox(); closeBooking(); closeMobileMenu();
+    }
+    if (document.getElementById('lightbox').classList.contains('active')) {
+        if (e.key === 'ArrowRight') lbNavigate(1);
+        if (e.key === 'ArrowLeft')  lbNavigate(-1);
+        if (e.key === '+' || e.key === '=') lbZoom(0.25);
+        if (e.key === '-') lbZoom(-0.25);
+    }
+});
 
-        function changeZoom(delta) {
-            currentScale = Math.max(0.5, Math.min(3, currentScale + delta));
-            updateTransform();
-        }
+document.getElementById('lightbox').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+});
+document.getElementById('booking-modal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('booking-modal')) closeBooking();
+});
 
-        function resetZoom() {
-            currentScale = 1; posX = 0; posY = 0;
-            updateTransform();
-        }
-
-        function updateTransform() {
-            lightboxImgContainer.style.transform = `scale(${currentScale}) translate(${posX}px, ${posY}px)`;
-            zoomText.innerText = Math.round(currentScale * 100) + '%';
-        }
-
-        let posX = 0, posY = 0, isDragging = false, startX, startY;
-        lightboxImgContainer.onmousedown = (e) => {
-            if (currentScale <= 1) return;
-            isDragging = true; startX = e.clientX - posX; startY = e.clientY - posY;
-            e.preventDefault();
-        };
-        window.onmousemove = (e) => {
-            if (!isDragging) return;
-            posX = e.clientX - startX; posY = e.clientY - startY;
-            updateTransform();
-        };
-        window.onmouseup = () => isDragging = false;
-
-        async function downloadImage() {
-            try {
-                const response = await fetch(currentImgUrl);
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `nabinks-${Date.now()}.jpg`;
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-            } catch (error) {
-                alert('Download failed. Try right clicking the image.');
-            }
-        }
-
-        // Generic close listeners
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') { closeLightbox(); closeBooking(); }
-        });
-        [lightbox, bookingModal].forEach(modal => {
-            modal.onclick = (e) => { if (e.target === modal) { closeLightbox(); closeBooking(); } };
-        });
-
-    </script>
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+filterGallery('all'); // preload gallery data even if not shown
+</script>
 </body>
 </html>
