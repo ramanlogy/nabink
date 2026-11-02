@@ -154,10 +154,19 @@
         }
         .hero-bg {
             position: absolute; inset: 0;
-            background-image: url('assets/work2.png');
+            background-image: url('assets/hero-poster.jpg');
             background-size: cover;
             background-position: center;
             will-change: transform;
+        }
+        .hero-video {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hero-video { display: none; }
         }
         .hero-overlay {
             position: absolute; inset: 0;
@@ -395,7 +404,7 @@
             display: block;
         }
         .masonry-item img {
-            width: 100%; display: block;
+            width: 100%; height: auto; display: block;
             transition: transform 0.4s ease;
         }
         .masonry-item:hover img { transform: scale(1.03); }
@@ -541,53 +550,6 @@
         }
         .method-wa { background: #25D366; color: #000; }
         .method-ig { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); color: #fff; }
-        .method-form { background: #fff; color: #000; }
-
-        .form-step { display: none; }
-        .form-step.active { display: block; }
-        .back-btn {
-            font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
-            text-transform: uppercase; color: var(--red);
-            background: none; border: none; cursor: pointer;
-            margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem;
-            transition: opacity 0.2s;
-        }
-        .back-btn:hover { opacity: 0.75; }
-        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-        @media (max-width: 400px) { .input-grid { grid-template-columns: 1fr; } }
-        .form-input, .form-select, .form-textarea {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #fff; border-radius: 8px;
-            padding: 0.75rem 1rem; width: 100%;
-            font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
-            transition: border-color 0.2s, background 0.2s;
-            margin-bottom: 0.75rem;
-        }
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
-            outline: none; border-color: var(--red);
-            background: rgba(255,255,255,0.08);
-        }
-        .form-select option { background: #1a1a1a; color: #fff; }
-        .form-textarea { resize: vertical; min-height: 100px; }
-        .submit-btn {
-            width: 100%; background: var(--red); color: #fff; border: none;
-            padding: 0.9rem; border-radius: 8px;
-            font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 700;
-            letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;
-            transition: background 0.2s, transform 0.15s;
-        }
-        .submit-btn:hover { background: var(--red-dark); }
-        .submit-btn:active { transform: scale(0.98); }
-        .success-box { text-align: center; padding: 2rem 0; }
-        .success-icon {
-            width: 64px; height: 64px; border-radius: 50%;
-            background: rgba(34,197,94,0.15); color: #22c55e;
-            margin: 0 auto 1.5rem;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .success-box h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
-        .success-box p { color: var(--text-muted); font-size: 0.875rem; line-height: 1.6; margin-bottom: 1.5rem; }
 
         /* ─── FOOTER ─── */
         footer {
@@ -659,6 +621,9 @@
     <!-- Hero -->
     <section class="hero" aria-label="Hero">
         <div class="hero-bg" id="hero-bg"></div>
+        <video class="hero-video" id="hero-video" poster="assets/hero-poster.jpg" muted loop playsinline preload="none" aria-hidden="true">
+            <source src="assets/hero-video.mp4" type="video/mp4">
+        </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="display hero-title">INK YOUR<br><span>IDENTITY</span></h1>
@@ -728,7 +693,7 @@
                     </div>
                 </div>
                 <div class="style-card" onclick="showGallery('fineline')" data-reveal style="transition-delay:0.1s">
-                    <img src="assets/fineline/finelinem1.png" alt="Fine line tattoo" loading="lazy">
+                    <img src="assets/fineline/fine6.png" alt="Fine line tattoo" loading="lazy">
                     <div class="style-overlay">
                         <div class="style-label">Subtle Art</div>
                         <div class="style-name display">Fine Line <span class="arrow">→</span></div>
@@ -741,7 +706,14 @@
                         <div class="style-name display">Dotwork <span class="arrow">→</span></div>
                     </div>
                 </div>
-                <div class="style-card" onclick="showGallery('custom')" data-reveal style="transition-delay:0.2s">
+                <div class="style-card" onclick="showGallery('japanese')" data-reveal style="transition-delay:0.2s">
+                    <img src="assets/japanese/japanese-peony-sleeve.jpeg" alt="Japanese style tattoo" loading="lazy">
+                    <div class="style-overlay">
+                        <div class="style-label">Irezumi Color</div>
+                        <div class="style-name display">Japanese <span class="arrow">→</span></div>
+                    </div>
+                </div>
+                <div class="style-card" onclick="showGallery('custom')" data-reveal style="transition-delay:0.25s">
                     <img src="assets/custom/design3.png" alt="Custom tattoo design" loading="lazy">
                     <div class="style-overlay">
                         <div class="style-label">Exclusive</div>
@@ -797,6 +769,7 @@
             <button class="filter-tab" data-cat="geometric" onclick="filterGallery('geometric')" role="tab">Geometric & Blackwork</button>
             <button class="filter-tab" data-cat="fineline" onclick="filterGallery('fineline')" role="tab">Fine Lines</button>
             <button class="filter-tab" data-cat="blackwork" onclick="filterGallery('blackwork')" role="tab">Dark Art</button>
+            <button class="filter-tab" data-cat="japanese" onclick="filterGallery('japanese')" role="tab">Japanese</button>
             <button class="filter-tab" data-cat="custom" onclick="filterGallery('custom')" role="tab">Available Designs</button>
         </div>
     </div>
@@ -878,62 +851,19 @@
     <div class="booking-box">
         <button class="booking-close" onclick="closeBooking()" aria-label="Close">×</button>
 
-        <!-- Step 1: Choose method -->
-        <div class="form-step active" id="step-choose">
-            <h3 class="display booking-title">Choose Your <span style="color:var(--red)">Method</span></h3>
-            <a href="https://wa.me/+9779703931883" target="_blank" rel="noopener" class="method-btn method-wa">
-                <div class="method-icon">
-                    <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.539 2.016 2.126-.54c1.029.563 2.025.886 3.162.888 3.181 0 5.767-2.587 5.768-5.766 0-3.18-2.586-5.751-5.768-5.751zm3.29 8.12c-.144.405-.838.758-1.226.808-.345.045-.794.065-1.282-.132-.482-.194-1.127-.419-1.935-1.225-1.145-1.144-1.585-2.523-1.585-3.398 0-.875.44-1.315.685-1.56.244-.245.54-.306.735-.306.195 0 .365.001.54.001.175 0 .385-.012.601.444.216.456.72 1.765.78 1.885.061.12.1.26.021.42-.079.16-.18.26-.3.38-.12.12-.25.24-.36.36-.11.11-.23.23-.1.45.13.22.58.96 1.24 1.54.66.58 1.22.76 1.39.84.17.08.27.06.37-.05.1-.11.43-.5.54-.67.11-.17.22-.14.37-.09.15.05.95.45 1.11.53.16.08.27.12.31.2.04.08.04.46-.1.87z"/></svg>
-                </div>
-                WhatsApp Direct
-            </a>
-            <a href="https://instagram.com/nab.inks" target="_blank" rel="noopener" class="method-btn method-ig">
-                <div class="method-icon">
-                    <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.063 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.063-2.633-.333-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                </div>
-                Instagram DM
-            </a>
-            <button class="method-btn method-form" onclick="showFormStep()">
-                <div class="method-icon">
-                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
-                </div>
-                <span style="flex:1;text-align:left">Website Request Form</span>
-            </button>
-        </div>
-
-        <!-- Step 2: Form -->
-        <div class="form-step" id="step-form">
-            <button class="back-btn" onclick="showChooseStep()">← Back to choices</button>
-            <h3 class="display booking-title">Tattoo <span style="color:var(--red)">Inquiry</span></h3>
-            <form id="inquiry-form" onsubmit="handleSubmit(event)" novalidate>
-                <div class="input-grid">
-                    <input type="text" placeholder="Full Name" required class="form-input">
-                    <input type="email" placeholder="Email Address" required class="form-input">
-                </div>
-                <select required class="form-select">
-                    <option value="" disabled selected>Select Style</option>
-                    <option>Geometric / Blackwork</option>
-                    <option>Fine Line / Minimalist</option>
-                    <option>Realism / Portrait</option>
-                    <option>Custom Commission</option>
-                </select>
-                <input type="text" placeholder="Placement (e.g. Forearm, Back)" required class="form-input">
-                <textarea placeholder="Describe your tattoo idea — size, details, meaning..." required class="form-textarea"></textarea>
-                <button type="submit" class="submit-btn">Submit Request</button>
-            </form>
-        </div>
-
-        <!-- Step 3: Success -->
-        <div class="form-step" id="step-success">
-            <div class="success-box">
-                <div class="success-icon">
-                    <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-                </div>
-                <h3 class="display">Request <span style="color:var(--red)">Sent!</span></h3>
-                <p>Thank you for reaching out. Nabin will review your request and get back to you within 48 hours.</p>
-                <button class="link-cta" onclick="closeBooking()">Close Window</button>
+        <h3 class="display booking-title">Choose Your <span style="color:var(--red)">Method</span></h3>
+        <a href="https://wa.me/+9779703931883" target="_blank" rel="noopener" class="method-btn method-wa">
+            <div class="method-icon">
+                <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.539 2.016 2.126-.54c1.029.563 2.025.886 3.162.888 3.181 0 5.767-2.587 5.768-5.766 0-3.18-2.586-5.751-5.768-5.751zm3.29 8.12c-.144.405-.838.758-1.226.808-.345.045-.794.065-1.282-.132-.482-.194-1.127-.419-1.935-1.225-1.145-1.144-1.585-2.523-1.585-3.398 0-.875.44-1.315.685-1.56.244-.245.54-.306.735-.306.195 0 .365.001.54.001.175 0 .385-.012.601.444.216.456.72 1.765.78 1.885.061.12.1.26.021.42-.079.16-.18.26-.3.38-.12.12-.25.24-.36.36-.11.11-.23.23-.1.45.13.22.58.96 1.24 1.54.66.58 1.22.76 1.39.84.17.08.27.06.37-.05.1-.11.43-.5.54-.67.11-.17.22-.14.37-.09.15.05.95.45 1.11.53.16.08.27.12.31.2.04.08.04.46-.1.87z"/></svg>
             </div>
-        </div>
+            WhatsApp Direct
+        </a>
+        <a href="https://www.instagram.com/nab.in025/" target="_blank" rel="noopener" class="method-btn method-ig">
+            <div class="method-icon">
+                <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.063 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.063-2.633-.333-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </div>
+            Instagram DM
+        </a>
     </div>
 </div>
 
@@ -945,7 +875,7 @@
             <p class="footer-tagline">Where sacred geometry meets the human canvas. High-end tattoo studio based in the heart of Nepal.</p>
         </div>
         <div class="social-links">
-            <a href="https://instagram.com/nab.inks" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+            <a href="https://www.instagram.com/nab.in025/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
                 <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.063 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.063-2.633-.333-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
             <a href="https://wa.me/9703931883" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp">
@@ -964,55 +894,68 @@
 // GALLERY DATA — deduplicated, categorized
 // ══════════════════════════════════════════
 const GALLERY = [
-    { title:'Geometric Sphere',      cat:'geometric', url:'assets/geometric/geo27.png' },
-    { title:'Sacred Mandala',        cat:'geometric', url:'assets/geometric/geo32.png' },
-    { title:'Geometric Sleeve',      cat:'geometric', url:'assets/geometric/geo35.png' },
-    { title:'Geometric Back',        cat:'geometric', url:'assets/geometric/geo31.png' },
-    { title:'Geometric Portrait',    cat:'geometric', url:'assets/geometric/geo28.png' },
-    { title:'Geometric Classic',     cat:'geometric', url:'assets/geometric/geo1stt.png' },
-    { title:'Geometric Leg',         cat:'geometric', url:'assets/geometric/geo1.png' },
-    { title:'Geometric Detail',      cat:'geometric', url:'assets/geometric/geo14.png' },
-    { title:'Geometric Flow',        cat:'geometric', url:'assets/geometric/geo17.png' },
-    { title:'Geometric Wrap',        cat:'geometric', url:'assets/geometric/geo29.png' },
-    { title:'Geometric Motif',       cat:'geometric', url:'assets/geometric/geo30.png' },
-    { title:'Geometric Lattice',     cat:'geometric', url:'assets/geometric/geo34.png' },
-    { title:'Geometric Angular',     cat:'geometric', url:'assets/geometric/geo38.png' },
-    { title:'Geometric Spiral',      cat:'geometric', url:'assets/geometric/geo36.png' },
-    { title:'Mandala Classic',       cat:'geometric', url:'assets/geometric/geo24.png' },
-    { title:'Mandala Detailed',      cat:'geometric', url:'assets/geometric/geo23.png' },
-    { title:'Mandala Large',         cat:'geometric', url:'assets/geometric/geo26.png' },
-    { title:'Mandala Sleeve',        cat:'geometric', url:'assets/geometric/geo33.png' },
-    { title:'Geometric Piece',       cat:'geometric', url:'assets/geometric/geo11.png' },
+    { title:'Geometric Sphere',      cat:'geometric', url:'assets/geometric/geo27.png', w:1200, h:1600 },
+    { title:'Sacred Mandala',        cat:'geometric', url:'assets/geometric/geo32.png', w:1179, h:1449 },
+    { title:'Geometric Sleeve',      cat:'geometric', url:'assets/geometric/geo35.png', w:1080, h:1135 },
+    { title:'Geometric Back',        cat:'geometric', url:'assets/geometric/geo31.png', w:1200, h:1600 },
+    { title:'Geometric Portrait',    cat:'geometric', url:'assets/geometric/geo28.png', w:1350, h:1600 },
+    { title:'Geometric Classic',     cat:'geometric', url:'assets/geometric/geo1stt.png', w:1179, h:1473 },
+    { title:'Geometric Leg',         cat:'geometric', url:'assets/geometric/geo1.png', w:1200, h:1600 },
+    { title:'Geometric Detail',      cat:'geometric', url:'assets/geometric/geo14.png', w:1280, h:1600 },
+    { title:'Geometric Flow',        cat:'geometric', url:'assets/geometric/geo17.png', w:900, h:1181 },
+    { title:'Geometric Wrap',        cat:'geometric', url:'assets/geometric/geo29.png', w:1200, h:1600 },
+    { title:'Geometric Motif',       cat:'geometric', url:'assets/geometric/geo30.png', w:1200, h:1600 },
+    { title:'Geometric Lattice',     cat:'geometric', url:'assets/geometric/geo34.png', w:1024, h:1024 },
+    { title:'Geometric Angular',     cat:'geometric', url:'assets/geometric/geo38.png', w:756, h:907 },
+    { title:'Geometric Spiral',      cat:'geometric', url:'assets/geometric/geo36.png', w:1079, h:1050 },
+    { title:'Mandala Classic',       cat:'geometric', url:'assets/geometric/geo24.png', w:1200, h:1600 },
+    { title:'Mandala Detailed',      cat:'geometric', url:'assets/geometric/geo23.png', w:1052, h:1233 },
+    { title:'Mandala Large',         cat:'geometric', url:'assets/geometric/geo26.png', w:1200, h:1600 },
+    { title:'Mandala Sleeve',        cat:'geometric', url:'assets/geometric/geo33.png', w:750, h:496 },
+    { title:'Geometric Piece',       cat:'geometric', url:'assets/geometric/geo11.png', w:1202, h:1600 },
+    { title:'Dotwork Skull Crest',   cat:'geometric', url:'assets/geometric/geo-mandala-skull-1.jpeg', w:1200, h:1600 },
+    { title:'Dotwork Skull Detail',  cat:'geometric', url:'assets/geometric/geo-mandala-skull-2.jpeg', w:1200, h:1600 },
+    { title:'Dotwork Skull Calf',    cat:'geometric', url:'assets/geometric/geo-mandala-skull-3.jpeg', w:900, h:1600 },
+    { title:'Geometric Forearm Star',cat:'geometric', url:'assets/geometric/geo-forearm-mandala.jpeg', w:1280, h:1280 },
+    { title:'Geometric Leg Sleeve',  cat:'geometric', url:'assets/geometric/geo-leg-sleeve.jpeg', w:1280, h:1280 },
+    { title:'Endless Knot',          cat:'geometric', url:'assets/geometric/geo-endless-knot.jpeg', w:960, h:1280 },
 
-    { title:'Fine Line Lotus',       cat:'fineline',  url:'assets/fineline/fine9.png' },
-    { title:'Minimalist Wave',       cat:'fineline',  url:'assets/fineline/finelinem1.png' },
-    { title:'Fine Line Script',      cat:'fineline',  url:'assets/fineline/fine10.png' },
-    { title:'Fine Line Detail',      cat:'fineline',  url:'assets/fineline/fine4.png' },
-    { title:'Fine Line Botanical',   cat:'fineline',  url:'assets/fineline/fine5.png' },
-    { title:'Fine Line Portrait',    cat:'fineline',  url:'assets/fineline/fine6.png' },
-    { title:'Fine Line Minimal',     cat:'fineline',  url:'assets/fineline/fine8.png' },
-    { title:'Fine Line Nature',      cat:'fineline',  url:'assets/fineline/fine21.png' },
-    { title:'Fine Line Abstract',    cat:'fineline',  url:'assets/fineline/fine20.png' },
-    { title:'Fine Line Delicate',    cat:'fineline',  url:'assets/fineline/fine12.png' },
-    { title:'Fine Line Floral',      cat:'fineline',  url:'assets/fineline/fine18.png' },
-    { title:'Fine Line Wave',        cat:'fineline',  url:'assets/fineline/fine22.png' },
-    { title:'Fine Line Classic',     cat:'fineline',  url:'assets/fineline/fine3.png' },
-    { title:'Fine Line Piece',       cat:'fineline',  url:'assets/fineline/fine7.png' },
-    { title:'Fine Line Study',       cat:'fineline',  url:'assets/fineline/fine2.png' },
+    { title:'Fine Line Lotus',       cat:'fineline',  url:'assets/fineline/fine9.png', w:1200, h:1600 },
+    { title:'Fine Line Script',      cat:'fineline',  url:'assets/fineline/fine10.png', w:1200, h:1600 },
+    { title:'Fine Line Detail',      cat:'fineline',  url:'assets/fineline/fine4.png', w:1200, h:1600 },
+    { title:'Fine Line Botanical',   cat:'fineline',  url:'assets/fineline/fine5.png', w:768, h:771 },
+    { title:'Fine Line Portrait',    cat:'fineline',  url:'assets/fineline/fine6.png', w:1600, h:1600 },
+    { title:'Fine Line Minimal',     cat:'fineline',  url:'assets/fineline/fine8.png', w:1200, h:1600 },
+    { title:'Fine Line Nature',      cat:'fineline',  url:'assets/fineline/fine21.png', w:1047, h:1162 },
+    { title:'Fine Line Abstract',    cat:'fineline',  url:'assets/fineline/fine20.png', w:1146, h:1038 },
+    { title:'Fine Line Delicate',    cat:'fineline',  url:'assets/fineline/fine12.png', w:750, h:1000 },
+    { title:'Fine Line Wave',        cat:'fineline',  url:'assets/fineline/fine22.png', w:681, h:1476 },
+    { title:'Fine Line Floral',      cat:'fineline',  url:'assets/fineline/fine18.png', w:1200, h:1600 },
+    { title:'Fine Line Classic',     cat:'fineline',  url:'assets/fineline/fine3.png', w:1342, h:1600 },
+    { title:'Fine Line Piece',       cat:'fineline',  url:'assets/fineline/fine7.png', w:1079, h:1171 },
+    { title:'Fine Line Study',       cat:'fineline',  url:'assets/fineline/fine2.png', w:1496, h:1600 },
+    { title:'Fine Line Angel',       cat:'fineline',  url:'assets/fineline/fine-angel-forearm.jpeg', w:960, h:1280 },
 
-    { title:'Dark Flow',             cat:'blackwork', url:'assets/allstyles/all11.png' },
-    { title:'Japanese Sleeve',       cat:'blackwork', url:'assets/allstyles/japanesearmselvedargon.png' },
-    { title:'Demonic Mask',          cat:'blackwork', url:'assets/allstyles/lakhedemonicmasksleeve.png' },
-    { title:'Samurai Mask',          cat:'blackwork', url:'assets/allstyles/samuraimasktattoo.png' },
-    { title:'Serene Buddha',         cat:'blackwork', url:'assets/allstyles/serenebuddhaarmtattoo.png' },
-    { title:'All Styles Mix',        cat:'blackwork', url:'assets/allstyles/all9.png' },
-    { title:'Child Portrait',        cat:'blackwork', url:'assets/allstyles/childpotraitwithleaves.png' },
+    { title:'Dark Flow',             cat:'blackwork', url:'assets/allstyles/all11.png', w:1056, h:1455 },
+    { title:'Japanese Dragon Sleeve',cat:'blackwork', url:'assets/allstyles/japanesearmselvedragon.png', w:1204, h:1600 },
+    { title:'Demonic Mask',          cat:'blackwork', url:'assets/allstyles/lakhedemonicmasksleeve.png', w:960, h:1280 },
+    { title:'Samurai Mask',          cat:'blackwork', url:'assets/allstyles/samuraimasktattoo.png', w:1204, h:1600 },
+    { title:'Serene Buddha',         cat:'blackwork', url:'assets/allstyles/serenebuddhaarmtattoo.png', w:1352, h:1600 },
+    { title:'All Styles Mix',        cat:'blackwork', url:'assets/allstyles/all9.png', w:744, h:992 },
+    { title:'Child Portrait',        cat:'blackwork', url:'assets/allstyles/childpotraitwithleaves.png', w:728, h:704 },
+    { title:'Buddha Arm Sleeve',     cat:'blackwork', url:'assets/allstyles/buddha-arm-sleeve-color.jpeg', w:900, h:1600 },
 
-    { title:'Custom Commission #1',  cat:'custom',    url:'assets/custom/design4.png' },
-    { title:'Custom Commission #2',  cat:'custom',    url:'assets/custom/design2.png' },
-    { title:'Custom Sleeve',         cat:'custom',    url:'assets/custom/design1.png' },
-    { title:'Custom Collection',     cat:'custom',    url:'assets/custom/design3.png' },
-    { title:'Custom Design',         cat:'custom',    url:'assets/custom/design6.png' },
+    { title:'Japanese Lotus',        cat:'japanese',  url:'assets/japanese/japanese-lotus-forearm.jpeg', w:1179, h:1572 },
+    { title:'Japanese Peony Sleeve', cat:'japanese',  url:'assets/japanese/japanese-peony-sleeve.jpeg', w:1160, h:1280 },
+    { title:'Japanese Koi Sleeve',   cat:'japanese',  url:'assets/japanese/japanese-koi-sleeve.jpeg', w:960, h:1280 },
+    { title:'Japanese Chrysanthemum',cat:'japanese',  url:'assets/japanese/japanese-chrysanthemum-forearm.png', w:1122, h:1122 },
+
+    { title:'Custom Commission #1',  cat:'custom',    url:'assets/custom/design4.png', w:1131, h:1600 },
+    { title:'Custom Commission #2',  cat:'custom',    url:'assets/custom/design2.png', w:1024, h:1536 },
+    { title:'Custom Sleeve',         cat:'custom',    url:'assets/custom/design1.png', w:1131, h:1600 },
+    { title:'Custom Collection',     cat:'custom',    url:'assets/custom/design3.png', w:1131, h:1600 },
+    { title:'Custom Design',         cat:'custom',    url:'assets/custom/design6.png', w:1131, h:1600 },
+    { title:'God Grace Lettering',   cat:'custom',    url:'assets/custom/god-grace-lettering.jpeg', w:1280, h:960 },
 ];
 
 // ══════════════════════════════════════════
@@ -1081,7 +1024,7 @@ function renderGrid() {
         el.className = 'masonry-item';
         el.style.animationDelay = (idx % 12 * 0.04) + 's';
         el.innerHTML = `
-            <img src="${item.url}" alt="${item.title}" loading="lazy" decoding="async" style="opacity:0;transition:opacity 0.4s ease">
+            <img src="${item.url}" alt="${item.title}" width="${item.w}" height="${item.h}" loading="lazy" decoding="async" style="opacity:0;transition:opacity 0.4s ease">
             <div class="masonry-item-overlay">
                 <div class="item-cat">${item.cat} Artistry</div>
                 <div class="item-title">${item.title}</div>
@@ -1199,32 +1142,11 @@ async function downloadLbImage() {
 function openBooking() {
     document.getElementById('booking-modal').classList.add('active');
     document.body.style.overflow = 'hidden';
-    showChooseStep();
 }
 
 function closeBooking() {
     document.getElementById('booking-modal').classList.remove('active');
     document.body.style.overflow = '';
-}
-
-function showChooseStep() {
-    setStep('step-choose');
-}
-
-function showFormStep() {
-    setStep('step-form');
-    document.getElementById('inquiry-form').reset();
-}
-
-function setStep(id) {
-    ['step-choose','step-form','step-success'].forEach(s => {
-        document.getElementById(s).classList.toggle('active', s === id);
-    });
-}
-
-function handleSubmit(e) {
-    e.preventDefault();
-    setStep('step-success');
 }
 
 // ══════════════════════════════════════════
@@ -1295,6 +1217,20 @@ document.getElementById('lightbox').addEventListener('click', (e) => {
 document.getElementById('booking-modal').addEventListener('click', (e) => {
     if (e.target === document.getElementById('booking-modal')) closeBooking();
 });
+
+// ══════════════════════════════════════════
+// HERO VIDEO — skip on reduced-motion or metered/slow connections
+// ══════════════════════════════════════════
+(function () {
+    const video = document.getElementById('hero-video');
+    if (!video) return;
+    const conn = navigator.connection || navigator.webkitConnection || navigator.mozConnection;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMetered = conn && (conn.saveData || /^(slow-2g|2g|3g)$/.test(conn.effectiveType || ''));
+    if (prefersReducedMotion || isMetered) return; // poster (.hero-bg) stays as the background
+    video.preload = 'auto';
+    video.play().catch(() => {}); // autoplay can be blocked; poster still shows
+})();
 
 // ══════════════════════════════════════════
 // INIT
