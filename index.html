@@ -281,6 +281,91 @@
         }
         .link-cta:hover { color: #fff; border-color: #fff; }
 
+        /* ─── HAPPY CLIENTS (carousel) ─── */
+        #happy-clients { background: var(--bg); padding-left: 0; padding-right: 0; overflow: hidden; }
+        .hc-top {
+            max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
+        }
+        .hc-top .section-title { margin-bottom: 0.6rem; }
+        .hc-arrows { display: flex; gap: 0.6rem; }
+        .hc-arrow {
+            width: 48px; height: 48px; border-radius: 99px;
+            display: flex; align-items: center; justify-content: center;
+            background: transparent; color: #fff; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.18);
+            transition: background .2s, border-color .2s, color .2s, opacity .2s, transform .15s;
+        }
+        .hc-arrow:hover:not(:disabled) { background: var(--red); border-color: var(--red); }
+        .hc-arrow:active:not(:disabled) { transform: scale(0.95); }
+        .hc-arrow:disabled { opacity: .28; cursor: default; }
+        .hc-arrow:focus-visible, .hc-media:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+
+        .hc-track {
+            margin-top: 2.75rem;
+            display: flex; gap: 1.25rem;
+            overflow-x: auto; overscroll-behavior-x: contain;
+            scroll-snap-type: x mandatory; scroll-behavior: smooth;
+            padding: 0 max(1.5rem, calc((100vw - 1200px) / 2 + 1.5rem)) 1rem;
+            scroll-padding-inline: max(1.5rem, calc((100vw - 1200px) / 2 + 1.5rem));
+            scrollbar-width: none; -ms-overflow-style: none;
+            cursor: grab;
+        }
+        .hc-track::-webkit-scrollbar { display: none; }
+        .hc-track.dragging { cursor: grabbing; scroll-behavior: auto; scroll-snap-type: none; }
+        .hc-slide { flex: 0 0 auto; scroll-snap-align: start; margin: 0; }
+        .hc-media {
+            display: block; padding: 0; border: 0; background: #111; cursor: pointer;
+            height: clamp(380px, 52vw, 540px); aspect-ratio: var(--ar, 4/5);
+            border-radius: 8px; overflow: hidden;
+            border: 1px solid var(--border);
+            transition: border-color .3s ease;
+        }
+        .hc-slide:hover .hc-media { border-color: rgba(220,38,38,0.5); }
+        .hc-media img {
+            width: 100%; height: 100%; display: block; object-fit: cover;
+            object-position: var(--pos, 50% 50%);
+            transition: transform .9s cubic-bezier(.16,1,.3,1);
+            -webkit-user-drag: none; user-select: none;
+        }
+        .hc-slide:hover .hc-media img { transform: scale(1.045); }
+        .hc-caption { padding: 1rem 0.15rem 0; max-width: 340px; }
+        .hc-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.04em; line-height: 1; }
+        .hc-where { margin-top: 0.35rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; color: var(--text-muted); }
+        .hc-quote { margin-top: 0.7rem; font-size: 0.85rem; font-style: italic; line-height: 1.55; color: rgba(255,255,255,0.62); }
+        .hc-track::after { content: ''; flex: 0 0 1px; }
+
+        @media (max-width: 480px) {
+            .hc-top { padding: 0 1rem; }
+            .hc-track { gap: 0.9rem; padding-left: 1rem; padding-right: 1rem; scroll-padding-inline: 1rem; }
+            .hc-media { height: 400px; }
+            .hc-arrow { width: 44px; height: 44px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hc-track { scroll-behavior: auto; }
+            .hc-media img { transition: none; }
+        }
+
+        /* ─── CLIENTS PAGE ─── */
+        #clients-view { display: none; padding: 7rem 1.5rem 5rem; min-height: 100vh; }
+        .cl-grid { columns: 1; column-gap: 1.25rem; margin-top: 3rem; }
+        @media (min-width: 560px)  { .cl-grid { columns: 2; } }
+        @media (min-width: 960px)  { .cl-grid { columns: 3; } }
+        .cl-item { break-inside: avoid; margin: 0 0 2.25rem; }
+        .cl-media {
+            display: block; width: 100%; padding: 0; background: #111; cursor: pointer;
+            border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+            transition: border-color .3s ease;
+        }
+        .cl-item:hover .cl-media { border-color: rgba(220,38,38,0.5); }
+        .cl-media:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+        .cl-media img { width: 100%; height: auto; display: block; transition: transform .9s cubic-bezier(.16,1,.3,1); }
+        .cl-item:hover .cl-media img { transform: scale(1.03); }
+        .cl-item .hc-caption { max-width: none; }
+        .cl-foot { margin-top: 2rem; text-align: center; }
+        .cl-foot p { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.1rem; }
+        .hc-more { display: flex; justify-content: center; margin-top: 2rem; }
+
         /* ─── STYLES GRID ─── */
         #styles-section { background: var(--bg); }
         .styles-grid {
@@ -600,6 +685,7 @@
     <div class="nav-links">
         <a href="javascript:void(0)" onclick="showHome()">Home</a>
         <a href="javascript:void(0)" onclick="showGallery('all')">Showcase</a>
+        <a href="javascript:void(0)" onclick="showClients()">Happy Clients</a>
         <a href="#about" onclick="showHome(); setTimeout(()=>document.getElementById('about').scrollIntoView({behavior:'smooth'}),100)">About</a>
         <button class="btn-book" onclick="openBooking()">Book Now</button>
     </div>
@@ -612,6 +698,7 @@
 <div id="mobile-menu">
     <a href="javascript:void(0)" onclick="closeMobileMenu();showHome()">Home</a>
     <a href="javascript:void(0)" onclick="closeMobileMenu();showGallery('all')">Showcase</a>
+    <a href="javascript:void(0)" onclick="closeMobileMenu();showClients()">Happy Clients</a>
     <a href="#about" onclick="closeMobileMenu();showHome();setTimeout(()=>document.getElementById('about').scrollIntoView({behavior:'smooth'}),120)">About</a>
     <button onclick="closeMobileMenu();openBooking()">Book Now</button>
 </div>
@@ -632,6 +719,150 @@
                 <button class="btn-primary" onclick="openBooking()">Book Session</button>
                 <button class="btn-outline" onclick="showGallery('all')">View Work</button>
             </div>
+        </div>
+    </section>
+
+    <!-- Happy Clients -->
+    <section id="happy-clients" aria-label="Happy clients">
+        <div class="hc-top">
+            <div>
+                <h2 class="display section-title" data-reveal>Happy <span style="color:var(--red)">Clients</span></h2>
+                <p class="section-sub" data-reveal>Real skin, worn every day</p>
+            </div>
+            <div class="hc-arrows" data-reveal>
+                <button class="hc-arrow" id="hc-prev" aria-label="Previous tattoo" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+                <button class="hc-arrow" id="hc-next" aria-label="Next tattoo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+            </div>
+        </div>
+        <div class="hc-track" id="hc-track" tabindex="-1">
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:4/5;--pos:50% 40%" onclick="openHappy(0)" aria-label="View Buddha and Mandala Sleeve">
+                    <img src="assets/happy/buddha-sleeve.jpg" alt="Buddha and Mandala Sleeve tattoo on a client" loading="eager" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">Buddha and Mandala Sleeve</div>
+                    <div class="hc-where">Full arm</div>
+                </figcaption>
+            </figure>
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:4/5;--pos:50% 50%" onclick="openHappy(1)" aria-label="View Dotwork Mandala Sleeve">
+                    <img src="assets/happy/dotwork-sleeve.jpg" alt="Dotwork Mandala Sleeve tattoo on a client" loading="eager" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">Dotwork Mandala Sleeve</div>
+                    <div class="hc-where">Forearm and elbow</div>
+                    <p class="hc-quote">“What broke me became part of my design”</p>
+                </figcaption>
+            </figure>
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:4/5;--pos:50% 50%" onclick="openHappy(2)" aria-label="View Hexagon Geometric Sleeve">
+                    <img src="assets/happy/hex-leg-sleeve.jpg" alt="Hexagon Geometric Sleeve tattoo on a client" loading="eager" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">Hexagon Geometric Sleeve</div>
+                    <div class="hc-where">Leg</div>
+                </figcaption>
+            </figure>
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:1/1;--pos:50% 38%" onclick="openHappy(3)" aria-label="View Dotted Lotus Mandala">
+                    <img src="assets/happy/neck-mandala.jpg" alt="Dotted Lotus Mandala tattoo on a client" loading="lazy" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">Dotted Lotus Mandala</div>
+                    <div class="hc-where">Neck and nape</div>
+                    <p class="hc-quote">“Fine stipple shading wrapped around the neck”</p>
+                </figcaption>
+            </figure>
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:5/4;--pos:50% 100%" onclick="openHappy(4)" aria-label="View God Grace Lettering">
+                    <img src="assets/happy/godcraft-chest.jpg" alt="God Grace Lettering tattoo on a client" loading="lazy" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">God Grace Lettering</div>
+                    <div class="hc-where">Chest piece</div>
+                    <p class="hc-quote">“Bold blackletter with ink splatter shading”</p>
+                </figcaption>
+            </figure>
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:4/5;--pos:50% 50%" onclick="openHappy(5)" aria-label="View Colour Peony Forearm">
+                    <img src="assets/happy/peony-forearm.jpg" alt="Colour Peony Forearm tattoo on a client" loading="lazy" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">Colour Peony Forearm</div>
+                    <div class="hc-where">Forearm</div>
+                </figcaption>
+            </figure>
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:4/5;--pos:64% 52%" onclick="openHappy(6)" aria-label="View Clock and Eye Realism">
+                    <img src="assets/happy/neck-clock-eye.jpg" alt="Clock and Eye Realism tattoo on a client" loading="lazy" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">Clock and Eye Realism</div>
+                    <div class="hc-where">Neck</div>
+                    <p class="hc-quote">“Time, memory and a watching eye”</p>
+                </figcaption>
+            </figure>
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:1/1;--pos:50% 50%" onclick="openHappy(7)" aria-label="View Endless Knot">
+                    <img src="assets/happy/knot-back.jpg" alt="Endless Knot tattoo on a client" loading="lazy" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">Endless Knot</div>
+                    <div class="hc-where">Upper back</div>
+                </figcaption>
+            </figure>
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:4/5;--pos:30% 50%" onclick="openHappy(8)" aria-label="View Geometric Leg Sleeve">
+                    <img src="assets/happy/geometric-leg.jpg" alt="Geometric Leg Sleeve tattoo on a client" loading="lazy" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">Geometric Leg Sleeve</div>
+                    <div class="hc-where">Shin and calf</div>
+                    <p class="hc-quote">“A journey written in geometry”</p>
+                </figcaption>
+            </figure>
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:1/1;--pos:50% 50%" onclick="openHappy(9)" aria-label="View Mandala with Colour Peony">
+                    <img src="assets/happy/peony-mandala-calf.jpg" alt="Mandala with Colour Peony tattoo on a client" loading="lazy" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">Mandala with Colour Peony</div>
+                    <div class="hc-where">Calf</div>
+                </figcaption>
+            </figure>
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:4/5;--pos:35% 40%" onclick="openHappy(10)" aria-label="View Elbow Mandala">
+                    <img src="assets/happy/mandala-elbow.jpg" alt="Elbow Mandala tattoo on a client" loading="lazy" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">Elbow Mandala</div>
+                    <div class="hc-where">Upper arm</div>
+                    <p class="hc-quote">“Not decoration. Energy encoded”</p>
+                </figcaption>
+            </figure>
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:5/4;--pos:50% 30%" onclick="openHappy(11)" aria-label="View Geometric Forearm">
+                    <img src="assets/happy/geo-forearm-bike.jpg" alt="Geometric Forearm tattoo on a client" loading="lazy" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">Geometric Forearm</div>
+                    <div class="hc-where">Full forearm</div>
+                    <p class="hc-quote">“Made of lessons, not regrets”</p>
+                </figcaption>
+            </figure>
+            <figure class="hc-slide">
+                <button class="hc-media" style="--ar:5/4;--pos:72% 100%" onclick="openHappy(12)" aria-label="View Colour Floral Forearm">
+                    <img src="assets/happy/swayambhu-floral.jpg" alt="Colour Floral Forearm tattoo on a client" loading="lazy" decoding="async" draggable="false">
+                </button>
+                <figcaption class="hc-caption">
+                    <div class="hc-name">Colour Floral Forearm</div>
+                    <div class="hc-where">Forearm</div>
+                    <p class="hc-quote">“A symbol of power, prosperity and passion”</p>
+                </figcaption>
+            </figure>
+        </div>
+        <div class="hc-more">
+            <button class="btn-outline" onclick="showClients()">View All Clients</button>
         </div>
     </section>
 
@@ -714,7 +945,7 @@
                     </div>
                 </div>
                 <div class="style-card" onclick="showGallery('custom')" data-reveal style="transition-delay:0.25s">
-                    <img src="assets/custom/design3.png" alt="Custom tattoo design" loading="lazy">
+                    <img src="assets/custom/hannya-mask.jpg" alt="Custom tattoo design" loading="lazy">
                     <div class="style-overlay">
                         <div class="style-label">Exclusive</div>
                         <div class="style-name display" style="font-size:1.3rem">Available Designs <span class="arrow">→</span></div>
@@ -744,6 +975,23 @@
             </div>
         </div>
     </section>
+</main>
+
+<!-- ══════════ HAPPY CLIENTS PAGE ══════════ -->
+<main id="clients-view">
+    <div class="section-inner">
+        <button class="gallery-back" onclick="showHome()" aria-label="Back to home">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Back to Home
+        </button>
+        <h1 class="display" style="font-size:clamp(2.5rem,7vw,5rem)">Happy <span style="color:var(--red)">Clients</span></h1>
+        <p class="section-sub" style="margin-top:0.75rem">Real skin, worn every day</p>
+        <div class="cl-grid" id="clients-grid"></div>
+        <div class="cl-foot">
+            <p>Your skin could be the next story</p>
+            <button class="btn-primary" onclick="openBooking()">Book Your Session</button>
+        </div>
+    </div>
 </main>
 
 <!-- ══════════ GALLERY VIEW ══════════ -->
@@ -950,6 +1198,8 @@ const GALLERY = [
     { title:'Japanese Koi Sleeve',   cat:'japanese',  url:'assets/japanese/japanese-koi-sleeve.jpeg', w:960, h:1280 },
     { title:'Japanese Chrysanthemum',cat:'japanese',  url:'assets/japanese/japanese-chrysanthemum-forearm.png', w:1122, h:1122 },
 
+    { title:'Hannya Mask Flash',     cat:'custom',    url:'assets/custom/hannya-mask.jpg', w:1200, h:1600 },
+    { title:'Dragon and Geometry Flash', cat:'custom', url:'assets/custom/dragon-geometric.jpg', w:1200, h:1600 },
     { title:'Custom Commission #1',  cat:'custom',    url:'assets/custom/design4.png', w:1131, h:1600 },
     { title:'Custom Commission #2',  cat:'custom',    url:'assets/custom/design2.png', w:1024, h:1536 },
     { title:'Custom Sleeve',         cat:'custom',    url:'assets/custom/design1.png', w:1131, h:1600 },
@@ -957,6 +1207,26 @@ const GALLERY = [
     { title:'Custom Design',         cat:'custom',    url:'assets/custom/design6.png', w:1131, h:1600 },
     { title:'God Grace Lettering',   cat:'custom',    url:'assets/custom/god-grace-lettering.jpeg', w:1280, h:960 },
 ];
+
+const HAPPY = [
+    { title:'Buddha and Mandala Sleeve', where:'Full arm', quote:'', url:'assets/happy/buddha-sleeve.jpg' },
+    { title:'Dotwork Mandala Sleeve', where:'Forearm and elbow', quote:'What broke me became part of my design', url:'assets/happy/dotwork-sleeve.jpg' },
+    { title:'Hexagon Geometric Sleeve', where:'Leg', quote:'', url:'assets/happy/hex-leg-sleeve.jpg' },
+    { title:'Dotted Lotus Mandala', where:'Neck and nape', quote:'Fine stipple shading wrapped around the neck', url:'assets/happy/neck-mandala.jpg' },
+    { title:'God Grace Lettering', where:'Chest piece', quote:'Bold blackletter with ink splatter shading', url:'assets/happy/godcraft-chest.jpg' },
+    { title:'Colour Peony Forearm', where:'Forearm', quote:'', url:'assets/happy/peony-forearm.jpg' },
+    { title:'Clock and Eye Realism', where:'Neck', quote:'Time, memory and a watching eye', url:'assets/happy/neck-clock-eye.jpg' },
+    { title:'Endless Knot', where:'Upper back', quote:'', url:'assets/happy/knot-back.jpg' },
+    { title:'Geometric Leg Sleeve', where:'Shin and calf', quote:'A journey written in geometry', url:'assets/happy/geometric-leg.jpg' },
+    { title:'Mandala with Colour Peony', where:'Calf', quote:'', url:'assets/happy/peony-mandala-calf.jpg' },
+    { title:'Elbow Mandala', where:'Upper arm', quote:'Not decoration. Energy encoded', url:'assets/happy/mandala-elbow.jpg' },
+    { title:'Geometric Forearm', where:'Full forearm', quote:'Made of lessons, not regrets', url:'assets/happy/geo-forearm-bike.jpg' },
+    { title:'Colour Floral Forearm', where:'Forearm', quote:'A symbol of power, prosperity and passion', url:'assets/happy/swayambhu-floral.jpg' },
+];
+function openHappy(i) {
+    filteredItems = HAPPY.map(h => ({ ...h, cat: 'happy clients' }));
+    openLightbox(i);
+}
 
 // ══════════════════════════════════════════
 // STATE
@@ -976,6 +1246,7 @@ let lbDrag = { active: false, startX: 0, startY: 0, originX: 0, originY: 0 };
 function showHome(pushState = true) {
     document.getElementById('home-view').classList.remove('hidden');
     document.getElementById('gallery-view').style.display = 'none';
+    document.getElementById('clients-view').style.display = 'none';
     document.body.style.overflow = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (pushState) {
@@ -985,6 +1256,7 @@ function showHome(pushState = true) {
 
 function showGallery(cat, pushState = true) {
     document.getElementById('home-view').classList.add('hidden');
+    document.getElementById('clients-view').style.display = 'none';
     const gv = document.getElementById('gallery-view');
     gv.style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -994,9 +1266,22 @@ function showGallery(cat, pushState = true) {
     }
 }
 
+function showClients(pushState = true) {
+    document.getElementById('home-view').classList.add('hidden');
+    document.getElementById('gallery-view').style.display = 'none';
+    document.getElementById('clients-view').style.display = 'block';
+    document.body.style.overflow = '';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    if (pushState) {
+        history.pushState({ view: 'clients' }, '', '#happy-clients');
+    }
+}
+
 // Handle browser back/forward buttons
 window.addEventListener('popstate', (e) => {
-    if (e.state && e.state.view === 'gallery') {
+    if (e.state && e.state.view === 'clients') {
+        showClients(false);
+    } else if (e.state && e.state.view === 'gallery') {
         showGallery(e.state.cat || 'all', false);
     } else {
         showHome(false);
@@ -1197,6 +1482,49 @@ const revealObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
 
 // ══════════════════════════════════════════
+// HAPPY CLIENTS CAROUSEL
+// ══════════════════════════════════════════
+(function () {
+    const track = document.getElementById('hc-track');
+    if (!track) return;
+    const prev = document.getElementById('hc-prev');
+    const next = document.getElementById('hc-next');
+    const step = () => Math.max(track.clientWidth * 0.7, 280);
+    prev.addEventListener('click', () => track.scrollBy({ left: -step() }));
+    next.addEventListener('click', () => track.scrollBy({ left: step() }));
+
+    let ticking = false;
+    function update() {
+        ticking = false;
+        const max = track.scrollWidth - track.clientWidth - 2;
+        prev.disabled = track.scrollLeft <= 2;
+        next.disabled = track.scrollLeft >= max;
+    }
+    track.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+
+    // mouse drag (touch already scrolls natively)
+    let down = false, moved = false, startX = 0, startLeft = 0;
+    track.addEventListener('pointerdown', e => {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        down = true; moved = false; startX = e.clientX; startLeft = track.scrollLeft;
+    });
+    window.addEventListener('pointermove', e => {
+        if (!down) return;
+        const dx = e.clientX - startX;
+        if (!moved && Math.abs(dx) > 5) { moved = true; track.classList.add('dragging'); }
+        if (moved) track.scrollLeft = startLeft - dx;
+    });
+    window.addEventListener('pointerup', () => {
+        if (!down) return;
+        down = false;
+        track.classList.remove('dragging');
+    });
+    track.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+})();
+
+// ══════════════════════════════════════════
 // KEYBOARD & CLICK OUTSIDE
 // ══════════════════════════════════════════
 document.addEventListener('keydown', (e) => {
@@ -1236,6 +1564,30 @@ document.getElementById('booking-modal').addEventListener('click', (e) => {
 // INIT
 // ══════════════════════════════════════════
 filterGallery('all'); // preload gallery data even if not shown
+
+(function renderClients() {
+    const grid = document.getElementById('clients-grid');
+    if (!grid) return;
+    HAPPY.forEach((h, i) => {
+        const f = document.createElement('figure');
+        f.className = 'cl-item';
+        f.innerHTML = `
+            <button class="cl-media" aria-label="View ${h.title}"><img src="${h.url}" alt="${h.title} tattoo on a client" loading="lazy" decoding="async"></button>
+            <figcaption class="hc-caption">
+                <div class="hc-name">${h.title}</div>
+                <div class="hc-where">${h.where}</div>
+                ${h.quote ? `<p class="hc-quote">\u201C${h.quote}\u201D</p>` : ''}
+            </figcaption>`;
+        f.querySelector('button').addEventListener('click', () => openHappy(i));
+        grid.appendChild(f);
+    });
+})();
+
+// open the clients page directly from a shared link
+if (location.hash === '#happy-clients') {
+    history.replaceState({ view: 'home' }, '', '#');
+    showClients();
+}
 
 // Seed the home state into history so the very first back press
 // doesn't exit the site — it returns to the home view instead.
